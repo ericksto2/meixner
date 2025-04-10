@@ -1,0 +1,108 @@
+---
+title: "Meixner"
+format: 
+  html:
+    toc: true
+    number-sections: false
+    css: styles.css  
+editor: visual
+---
+
+```{r setup, echo=FALSE, include=FALSE, warning=FALSE, message=FALSE}
+rm(list = ls(all.names = TRUE))
+```
+
+```{r librerías, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(stringr)
+library(tidyquant)
+library(ggtext)
+library(glue)
+library(ggrepel)
+library(GGally)
+library(corrplot)
+library(PortfolioAnalytics)
+library(quantmod)
+library(PerformanceAnalytics)
+library(timetk)
+library(patchwork)
+library(moments)
+library(knitr)
+library(VarianceGamma)
+
+```
+
+
+# Ajustes
+
+```{r cargar_datos, warning=FALSE, message=FALSE}
+# Módulo 1: Carga de datos ---------------------------------------------------
+
+# Definimos el rango de fechas para la descarga de precios
+# primera_fecha: inicio del periodo de análisis
+primera_fecha <- '2019-01-01'
+
+# ultima_fecha: fin del periodo de análisis
+ultima_fecha <- '2024-12-31'
+
+# Definimos el conjunto de tickers o símbolos de los activos financieros que vamos a analizar
+tickers <- c(
+  # "^SPX",            # Este está comentado, pero sería el índice S&P500
+  "BOLSAA.MX",         # Bolsa Mexicana de Valores
+  "GFNORTEO.MX",       # Grupo Financiero Banorte
+  "GENTERA.MX",        # Gentera
+  "GFINBURO.MX"        # Grupo Financiero Inbursa
+)
+
+# Descargamos precios históricos ajustados para cada ticker usando tq_get de tidyquant
+descarga_precios <- tickers %>%
+  tq_get(get = "stock.prices",
+         from = primera_fecha,
+         to = ultima_fecha)
+
+# Seleccionamos las columnas relevantes: símbolo, fecha y precio ajustado
+# Además, ordenamos por fecha
+df_precios_historicos <- descarga_precios %>% 
+  dplyr::select(symbol, date, adjusted) %>%
+  dplyr::arrange(date)
+
+# Agrupamos los datos por símbolo para operaciones posteriores
+descarga_precios <- descarga_precios %>% 
+  group_by(symbol)
+
+# Calculamos los rendimientos logarítmicos diarios para cada activo
+rendimientos_activos <- descarga_precios %>%
+  tq_transmute(select     = adjusted,     # Seleccionamos el precio ajustado
+               mutate_fun = periodReturn, # Función para calcular rendimientos
+               period     = "daily",      # Periodicidad diaria
+               type       = "log",        # Tipo de rendimiento: logarítmico
+               col_rename = "returns")    # Renombramos la nueva columna como "returns"
+
+# Extraemos y ordenamos alfabéticamente los nombres únicos de los instrumentos
+nombres_instrumentos <- rendimientos_activos %>% 
+  dplyr::select(symbol) %>% 
+  unique() %>%
+  pull(symbol) %>% 
+  sort()
+
+# Definimos una paleta de colores para futuras visualizaciones
+paleta <- c("#F8766D", "#7CAE00", "#00BFC4", "#C77CFF")
+
+# Calculamos estadísticos descriptivos de los rendimientos:
+# media, mediana, desviación estándar, asimetría, curtosis, mínimo y máximo
+tabla_descriptivos <- rendimientos_activos %>% 
+  summarise(media = mean(returns),
+            mediana = median(returns),
+            desviacion = sqrt(var(returns)),
+            asimetria = moments::skewness(returns),
+            curtosis = moments::kurtosis(returns),
+            minimo = min(returns),
+            maximo = max(returns))
+
+
+```
+
+
