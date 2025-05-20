@@ -12,7 +12,7 @@ editor: visual
 rm(list = ls(all.names = TRUE))
 ```
 
-```{r librerías, warning=FALSE, message=FALSE}
+```{r librerías, warning=FALSE, message=FALSE, include=FALSE}
 library(ggplot2)
 library(dplyr)
 library(readr)
@@ -35,55 +35,61 @@ library(VarianceGamma)
 #install.packages("ggbeeswarm")
 library(ggbeeswarm)
 library(TTR)
+library(purrr)
 
 ```
 
-# Ajustes
 
-```{r cargar_datos}
+# Justificación
+
+Grupo Carso y Grupo Financiero Inbursa son dos entidades emblemáticas del empresariado mexicano. Grupo Carso se consolidó como un conglomerado  industrial y comercial diversificado, mientras que Grupo Financiero Inbursa se especializó en  servicios financieros integrales. 
+
+Grupo Carso se constituyó formalmente en 1980, durante está decáda se expandió en negocios industriales y de consumo como: la tabacalera Cigatam, la llantera Euzkadi, la minera Frisco y el fabricante de cables Condume.Un hito  crucial llegó en 1990, cuando adquirió el control de Teléfonos de México (Telmex) durante su privatización. Grupo Carso salió a bolsa en 1990 y continuó creciendo con la compra de la  mayoría de acciones de empresas como Sanborns. A partir  de 1996, el conglomerado decidió escindir sus operaciones de telecomunicaciones en una entidad separada (Carso Global Telecom, hoy parte de América Móvil) , manteniendo en Grupo Carso  negocios diversificados en comercio, industria, energía e infraestructura.  
+ 
+Por su parte, Grupo Financiero Inbursa se constituyó en septiembre de 1992, agrupando banco, casa de bolsa, aseguradora y afore principalmente. En los años siguientes, Inbursa añadió nuevas  líneas de negocio: fundó Banco Inbursa (1993) y empresas de arrendamiento y factoraje; lanzó la Afore Inbursa en 1996 al establecerse el sistema de pensiones privado; e incluso incursionó en alianzas  estratégicas, como la compra de Banco Walmart en 2015 para ampliar su presencia en banca de  consumo.
+ 
+ 
+A lo largo de sus décadas de operación, Grupo Carso ha experimentado un crecimiento económico notable, convirtiéndose en uno de los conglomerados más grandes e importantes de México y América Latina.  Un indicador de su escala actual son sus ingresos: en 2023, las ventas consolidadas de Grupo Carso alcanzaron aproximadamente 198,455 millones de pesos, con crecimiento anual de 9.3%, además en 2023 registró una utilidad neta de \$ 13,519 millones de pesos. Asimismo, grupo Carso genera alrededor de 250 mil empleos directos y más de 500 mil indirectos en  México, contribuyendo al desarrollo económico y social más allá de las cifras puramente financieras.
+ 
+ 
+Grupo Financiero Inbursa, por su parte, durante el 2015 ya se posicionaba entre las instituciones más importantes en el país, con aproximadamente 327,547 millones de pesos en activos y una  cartera de crédito total de 237,479 mdp. Esta trayectoria ascendente continuó en la última década, pues al  cierre de 2023, los activos de Inbursa superaban los 578 mil millones de pesos, equivalentes a 4.22%  de los activos de todo el sistema bancario mexicano. En la misma fecha, su cartera de crédito de cerca 360 mil millones representaba 5.3% de los préstamos bancarios del país. La utilidad neta en 2023 fue de \$30,985 millones de pesos, un incremento notable frente a \$24,495 millones del año anterior. Cabe destacar que, de acuerdo a la Comisión Nacional Bancaria y de Valores, Banco Inbursa ha sido designado en 2024 como “institución de importancia sistémica local”, entrando al selecto grupo de bancos cuya relevancia es tal que su eventual riesgo podría impactar la  estabilidad financiera nacional. Tal clasificación compartida con gigantes como BBVA, Banamex, Banorte, Santander, HSBC y Scotiabank. 
+
+En el caso específico de Inbursa, su participación de mercado en banca lo sitúa consistentemente  entre los primeros 5 o 6 bancos de México por tamaño de activos. Inbursa ocupa el cuarto  lugar nacional en créditos comerciales otorgados y mantiene cuotas cercanas al 5% en los principales  segmentos bancarios, como ya se mencionó.
+
+La influencia versatil de las compañías clave grupo Carso (incluyendo América Móvil, Telmex, entre otras) es tan grande que su valor bursátil conjunto equivale aproximadamente al 7.6% del PIB de México , y representan  cerca del 18% de la capitalización total del mercado accionario nacional.
+
+El análisis se basa en los precios históricos descargados desde Yahoo Finance, considerando para Grupo Carso datos desde el 14 de marzo del año 2000 hasta la fecha actual, y para Grupo Financiero Inbursa desde el 3 de enero del año 2000 hasta hoy. Estos periodos reflejan la disponibilidad completa de información bursátil proporcionada por la fuente.
+
+```{r cargar_datos, include=FALSE, warning=FALSE, message=FALSE}
+
+tickers <- c("GFINBURO.MX", "GCARSOA1.MX")
+
+fechas_inicio <- c("2000-01-03", "2000-03-14")
+fecha_final <- "2025-05-14"
 
 
-# Definimos el rango de fechas para la descarga de precios
-# primera_fecha: inicio del periodo de análisis
-primera_fecha <- '2019-01-01'
-
-# ultima_fecha: fin del periodo de análisis
-ultima_fecha <- '2024-12-31'
-
-#tickers <- c("IENOVA.MX", "KIMBERA.MX", "GMEXICOB.MX", "GAPB.MX", "GCARSOA1.MX", "CUERVO.MX", "MEGACPO.MX", "AC.MX", "GRUMAB.MX", "AMXL.MX", "ALSEA.MX", "LABB.MX", "ALPEKA.MX", "FEMSAUBD.MX", "CEMEXCPO.MX", "TLEVISACPO.MX", "PINFRA.MX", "ASURB.MX", "OMAB.MX", "BIMBOA.MX")
-
-
-# Definimos el conjunto de tickers o símbolos de los activos financieros que vamos a analizar
-tickers <- c(
-  # "^SPX",            # Este está comentado, pero sería el índice S&P500
-  "BOLSAA.MX",         # Bolsa Mexicana de Valores
-  "GFNORTEO.MX",       # Grupo Financiero Banorte
-  "GENTERA.MX",        # Gentera
-  "GFINBURO.MX"        # Grupo Financiero Inbursa
+descarga_precios <- map2_df(tickers, fechas_inicio,
+  ~ tq_get(.x,
+           get = "stock.prices",
+           from = .y,
+           to = fecha_final)
 )
 
-# Descargamos precios históricos ajustados para cada ticker usando tq_get de tidyquant
-descarga_precios <- tickers %>%
-  tq_get(get = "stock.prices",
-         from = primera_fecha,
-         to = ultima_fecha)
+df_precios_historicos <- descarga_precios %>%
+  select(symbol, date, adjusted) %>%
+  arrange(date)
 
-# Seleccionamos las columnas relevantes: símbolo, fecha y precio ajustado
-# Además, ordenamos por fecha
-df_precios_historicos <- descarga_precios %>% 
-  dplyr::select(symbol, date, adjusted) %>%
-  dplyr::arrange(date)
 
-# Agrupamos los datos por símbolo para operaciones posteriores
-descarga_precios <- descarga_precios %>% 
+descarga_precios <- descarga_precios %>%
   group_by(symbol)
 
-head(descarga_precios)
+
 ```
 
 # Cálculo de los log-rendimientos diarios
 
-```{r}
+```{r logrendimientos diarios, echo=FALSE, warning=FALSE, message=FALSE}
+
 # Calculamos los rendimientos logarítmicos diarios para cada activo
 rendimientos_activos <- descarga_precios %>%
   tq_transmute(select     = adjusted,     # Seleccionamos el precio ajustado
@@ -100,18 +106,16 @@ nombres_instrumentos <- rendimientos_activos %>%
   sort()
 
 #Paleta de colores
-paleta <- c("#F8766D", "#7CAE00", "#00BFC4", "#C77CFF")
+paleta <- c( "blue","gray")
 
 head(rendimientos_activos)
 
 ```
 
-# Cálculo de descriptivos: media, mediana, curtosis, skewness, desviación estándar
+# Cálculo de descriptivos
 
-```{r estadisticos descriptivos}
+```{r estadisticos descriptivos, echo=FALSE, warning=FALSE, message=FALSE}
 
-# Calculamos estadísticos descriptivos de los rendimientos:
-# media, mediana, desviación estándar, asimetría, curtosis, mínimo y máximo
 tabla_descriptivos <- rendimientos_activos %>% 
   summarise(media = mean(returns),
             mediana = median(returns),
@@ -121,22 +125,29 @@ tabla_descriptivos <- rendimientos_activos %>%
             minimo = min(returns),
             maximo = max(returns))
 
-head(tabla_descriptivos)
+kable(tabla_descriptivos)%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 ```
 
-# Gráfico de densidad, histograma, beeswarm, caja y brazos
+# Gráfico de densidad, histograma, boxplot y velas
 
-```{r histograma}
-# Histograma de rendimientos 
+## Historico
+
+### Histograma historico
+
+```{r histograma historico, echo=FALSE, warning=FALSE, message=FALSE}
+
 for(tick in nombres_instrumentos){
   i <- match(tick, nombres_instrumentos)
 
   graf <- rendimientos_activos %>%
     filter(symbol == tick) %>%
     ggplot(aes(x = returns)) +
-    geom_histogram(binwidth = 0.002, fill = paleta[i], color = "black", alpha = 0.6) +
-    ggtitle(paste0("Histograma de rendimientos - ", tick)) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.007, fill = paleta[i], color = "black", alpha = 0.6) +
+    geom_density(color = "red", size = 0.75) +
+    ggtitle(paste0("Histograma de rendimientos históricos - ", tick)) +
     theme_light() +
     theme(plot.title = element_text(size = 10))
 
@@ -145,44 +156,9 @@ for(tick in nombres_instrumentos){
 
 ```
 
-```{r densidades}
-# Gráfico de densidades 
-for(tick in nombres_instrumentos){
-  i <- match(tick, nombres_instrumentos)
+### Boxplot historico
 
-  graf <- rendimientos_activos %>%
-    filter(symbol == tick) %>%
-    ggplot() +
-    stat_density(aes(x = returns), fill = paleta[i], alpha = 0.4) +
-    ggtitle(paste0("Densidad de rendimientos - ", tick)) +
-    theme_light() +
-    theme(plot.title = element_text(size = 10))
-
-  print(graf)
-}
-
-```
-
-```{r beeswarm}
-
-# Beeswarm por instrumento
-for(tick in nombres_instrumentos){
-  i <- match(tick, nombres_instrumentos)
-
-  graf <- rendimientos_activos %>%
-    filter(symbol == tick) %>%
-    ggplot(aes(x = symbol, y = returns)) +
-    geom_beeswarm(color = paleta[i], alpha = 0.6) +
-    ggtitle(paste0("Beeswarm de rendimientos - ", tick)) +
-    theme_light() +
-    theme(plot.title = element_text(size = 10))
-
-  print(graf)
-}
-
-```
-
-```{r boxplot}
+```{r boxplot, echo=FALSE, warning=FALSE, message=FALSE}
 
 # Boxplot de rendimientos
 ggplot(rendimientos_activos, aes(x = symbol, y = returns, fill = symbol)) +
@@ -194,29 +170,31 @@ ggplot(rendimientos_activos, aes(x = symbol, y = returns, fill = symbol)) +
 
 ```
 
-# Gráfico de velas y algunas métricas/señales de trading
+### Gráfico de velas historico
 
-```{r velas, warning=FALSE, message=FALSE}
+```{r velas, warning=FALSE, message=FALSE, echo=FALSE}
  
-#Gráfico de velas para cada instrumento
 for(tick in nombres_instrumentos){
   i <- match(tick, nombres_instrumentos)
-  nombre_grafico <- paste0("velas_", str_sub(tick, start = 1, end = -4))
 
   graf_velas <- descarga_precios %>%
-    filter(symbol == tick, date >= "2022-01-01") %>% # puedes ajustar la fecha si quieres ver más periodo
+    filter(symbol == tick) %>%
+    mutate(periodo = lubridate::floor_date(date, unit = "6 months")) %>%  # unidad de tiempo
+    group_by(periodo) %>%
+    summarise(
+      open = first(open),
+      close = last(close),
+      high = max(high),
+      low = min(low),
+      .groups = "drop"
+    ) %>%
     mutate(color_vela = ifelse(close >= open, "Alcista", "Bajista")) %>%
-    ggplot(aes(x = date)) +
-
-    # Mechas (de mínimo a máximo)
-    geom_segment(aes(xend = date, y = low, yend = high, color = color_vela)) +
-
-    # Cuerpo de la vela (de apertura a cierre)
-    geom_segment(aes(xend = date, y = open, yend = close, color = color_vela),
-                 size = 2) +
-
+    ggplot(aes(x = periodo)) +
+    geom_segment(aes(xend = periodo, y = low, yend = high, color = color_vela)) +
+    geom_segment(aes(xend = periodo, y = open, yend = close, color = color_vela),
+                 size = 3) +
     scale_color_manual(values = c("Alcista" = "forestgreen", "Bajista" = "firebrick")) +
-    labs(title = paste0("Gráfico de velas - ", tick),
+    labs(title = paste0("Gráfico de velas mensuales - ", tick),
          x = "", y = "") +
     theme_light() +
     theme(plot.title = element_text(size = 10),
@@ -227,13 +205,191 @@ for(tick in nombres_instrumentos){
 }
 
 
+
 ```
+
+## Primer trimestre (Q1) 2025 
+
+### Histograma Q3 - 2025
+  
+```{r histograma_Q3, echo=FALSE, warning=FALSE, message=FALSE}
+
+for(tick in nombres_instrumentos){
+  i <- match(tick, nombres_instrumentos)
+
+  # Primer trimestre 2025
+  graf_1T2025 <- rendimientos_activos %>%
+    filter(symbol == tick,
+           date >= as.Date("2025-01-01"),
+           date <= as.Date("2025-03-31")) %>%
+    ggplot(aes(x = returns)) +
+    geom_histogram(aes(y = ..density..), 
+                   binwidth = 0.005,
+                   fill = paleta[i],
+                   color = "black",
+                   alpha = 0.6) +
+    geom_density(color = "red", size = 0.75) +  
+    ggtitle(paste0("Histograma y densidad - 1Q 2025 - ", tick)) +
+    theme_light() +
+    theme(plot.title = element_text(size = 10))
+
+  print(graf_1T2025)
+}
+  
+```
+
+### Boxplot Q1 2025
+
+```{r boxplot_1T2025, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Filtrado para el primer trimestre de 2025
+rend_q1_2025 <- rendimientos_activos %>%
+  filter(date >= as.Date("2025-01-01"),
+         date <= as.Date("2025-03-31"))
+
+# Boxplot 1Q 2025
+ggplot(rend_q1_2025, aes(x = symbol, y = returns, fill = symbol)) +
+  geom_boxplot(alpha = 0.6) +
+  scale_fill_manual(values = paleta) +
+  theme_light() +
+  ggtitle("Boxplot de rendimientos - 1er trimestre 2025") +
+  theme(plot.title = element_text(size = 12))
+```
+  
+### Grafico de velas Q1 2023
+
+```{r velas Q1, warning=FALSE, message=FALSE, echo=FALSE}
+ 
+for(tick in nombres_instrumentos){
+  i <- match(tick, nombres_instrumentos)
+
+  graf_velas_q1 <- descarga_precios %>%
+    filter(symbol == tick,
+           date >= as.Date("2025-01-01"),
+           date <= as.Date("2025-03-31")) %>%
+     mutate(periodo = lubridate::floor_date(date, unit = "2 days"))%>%  
+    group_by(periodo) %>%
+    summarise(
+      open = first(open),
+      close = last(close),
+      high = max(high),
+      low = min(low),
+      .groups = "drop"
+    ) %>%
+    mutate(color_vela = ifelse(close >= open, "Alcista", "Bajista")) %>%
+    ggplot(aes(x = periodo)) +
+    geom_segment(aes(xend = periodo, y = low, yend = high, color = color_vela)) +
+    geom_segment(aes(xend = periodo, y = open, yend = close, color = color_vela),
+                 size = 3) +
+    scale_color_manual(values = c("Alcista" = "forestgreen", "Bajista" = "firebrick")) +
+    labs(title = paste0("Velas semanales - 1T 2025 - ", tick),
+         x = "", y = "") +
+    theme_light() +
+    theme(plot.title = element_text(size = 10),
+          axis.text.x = element_text(angle = 65, vjust = 0.5, size = 8),
+          legend.position = "none")
+
+  print(graf_velas_q1)
+}
+
+
+
+```
+
+## Marzo 2025
+
+### Histograma Marzo - 2025
+  
+```{r histograma 032025, echo=FALSE, warning=FALSE, message=FALSE} 
+
+for(tick in nombres_instrumentos){
+  i <- match(tick, nombres_instrumentos)
+
+  graf_marzo2025 <- rendimientos_activos %>%
+    filter(symbol == tick,
+           date >= as.Date("2025-03-01"),
+           date <= as.Date("2025-03-31")) %>%
+    ggplot(aes(x = returns)) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.005,
+                   fill = paleta[i],
+                   color = "black",
+                   alpha = 0.6) +
+    geom_density(color = "red", size = 1) +
+    ggtitle(paste0("Histograma y densidad - Marzo 2025 - ", tick)) +
+    theme_light() +
+    theme(plot.title = element_text(size = 10))
+
+  print(graf_marzo2025)
+}
+
+
+```
+
+
+### Boxplot Marzo 2025
+
+```{r boxplot_marzo2025, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Filtrado para marzo 2025
+rend_marzo_2025 <- rendimientos_activos %>%
+  filter(date >= as.Date("2025-03-01"),
+         date <= as.Date("2025-03-31"))
+
+# Boxplot marzo 2025
+ggplot(rend_marzo_2025, aes(x = symbol, y = returns, fill = symbol)) +
+  geom_boxplot(alpha = 0.6) +
+  scale_fill_manual(values = paleta) +
+  theme_light() +
+  ggtitle("Boxplot de rendimientos - Marzo 2025") +
+  theme(plot.title = element_text(size = 12))
+```
+
+
+### Gráfico de velas Marzo 2025
+
+```{r velas marzo, warning=FALSE, message=FALSE, echo=FALSE}
+ 
+for(tick in nombres_instrumentos){
+  i <- match(tick, nombres_instrumentos)
+
+  graf_velas_marzo <- descarga_precios %>%
+    filter(symbol == tick,
+           date >= as.Date("2025-03-01"),
+           date <= as.Date("2025-03-31")) %>%
+    mutate(periodo = date) %>%  # día a día
+    group_by(periodo) %>%
+    summarise(
+      open = first(open),
+      close = last(close),
+      high = max(high),
+      low = min(low),
+      .groups = "drop"
+    ) %>%
+    mutate(color_vela = ifelse(close >= open, "Alcista", "Bajista")) %>%
+    ggplot(aes(x = periodo)) +
+    geom_segment(aes(xend = periodo, y = low, yend = high, color = color_vela)) +
+    geom_segment(aes(xend = periodo, y = open, yend = close, color = color_vela),
+                 size = 3) +
+    scale_color_manual(values = c("Alcista" = "forestgreen", "Bajista" = "firebrick")) +
+    labs(title = paste0("Velas diarias - Marzo 2025 - ", tick),
+         x = "", y = "") +
+    theme_light() +
+    theme(plot.title = element_text(size = 10),
+          axis.text.x = element_text(angle = 65, vjust = 0.5, size = 8),
+          legend.position = "none")
+
+  print(graf_velas_marzo)
+}
+
+
+```
+
 
 # Estimación de parámetros Gaussianos: Agregar densidades, qqplot y distribución empírica
 
-```{r gauss, warning=FALSE, message=FALSE, fig.width=10, fig.height=5}
+```{r gauss, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=5}
 
-# Requiere: library(nortest) ya cargada
 for(tick in nombres_instrumentos){
   i <- match(tick, nombres_instrumentos)
   data_tick <- rendimientos_activos %>% filter(symbol == tick)
@@ -322,9 +478,10 @@ plot(x_vals, densidad, type = "l", col = "blue",
 
 ## Momentos Empiricos
 
+
 ```{r}
 # Definir el ticker de prueba
-accion <- "GFNORTEO.MX"
+accion <- "GCARSOA1.MX"
 
 rendimientos_filtrados <- rendimientos_activos %>%
   filter(symbol == accion)
@@ -340,7 +497,7 @@ curtosis_emp <- moments::kurtosis(rendimientos);curtosis_emp
 
 ## Función objetivo
 
-La función objetivo que estamos utilizando en la estimación por momentos es la suma de errores cuadráticos entre momentos empíricos y teóricos. Esta elección se basa en una idea sencilla pero poderosa: si queremos que una distribución (en este caso, Meixner) se parezca a nuestros datos, una manera natural es exigir que sus momentos principales —media, varianza, asimetría y curtosis— coincidan con los momentos que calculamos directamente de los datos. Como resolver este sistema de ecuaciones no es posible de forma exacta (por la complejidad no lineal de las expresiones), lo que hacemos es medir qué tan lejos están los momentos teóricos de los empíricos, y tratamos de encontrar los parámetros que minimicen esa diferencia. Usamos la suma de los errores al cuadrado porque penaliza más fuertemente las desviaciones grandes, evita que los errores se cancelen (como ocurriría si usáramos sumas simples), y además tiene propiedades matemáticas útiles: es una función suave, continua y derivable, lo que la hace ideal para métodos numéricos como los que usamos con `optim()`.
+La función objetivo que estamos utilizando en la estimación por momentos es la suma de errores cuadráticos entre momentos empíricos y teóricos. Esta elección se basa en una idea sencilla; si queremos que una distribución se parezca a nuestros datos, una manera natural es exigir que sus momentos coincidan con los momentos que calculamos directamente de los datos. Como resolver este sistema de ecuaciones no es posible de forma exacta (por la complejidad no lineal de las expresiones), lo que hacemos es medir qué tan lejos están los momentos teóricos de los empíricos, y tratamos de encontrar los parámetros que minimicen esa diferencia. Usamos la suma de los errores al cuadrado porque penaliza más fuertemente las desviaciones grandes, evita que los errores se cancelen (como ocurriría si usáramos sumas simples), y además tiene propiedades matemáticas útiles: es una función suave, continua y derivable, lo que la hace ideal para métodos numéricos como los que usamos con `optim()`.
 
 ```{r}
 # Función de pérdida (suma de errores cuadrados entre momentos teóricos y empíricos)

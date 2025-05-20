@@ -67,6 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Meixner_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Meixner_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Meixner_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Meixner_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="Meixner_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -109,11 +113,30 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ajustes" id="toc-ajustes" class="nav-link active" data-scroll-target="#ajustes">Ajustes</a></li>
+  <li><a href="#justificación" id="toc-justificación" class="nav-link active" data-scroll-target="#justificación">Justificación</a></li>
   <li><a href="#cálculo-de-los-log-rendimientos-diarios" id="toc-cálculo-de-los-log-rendimientos-diarios" class="nav-link" data-scroll-target="#cálculo-de-los-log-rendimientos-diarios">Cálculo de los log-rendimientos diarios</a></li>
-  <li><a href="#cálculo-de-descriptivos-media-mediana-curtosis-skewness-desviación-estándar" id="toc-cálculo-de-descriptivos-media-mediana-curtosis-skewness-desviación-estándar" class="nav-link" data-scroll-target="#cálculo-de-descriptivos-media-mediana-curtosis-skewness-desviación-estándar">Cálculo de descriptivos: media, mediana, curtosis, skewness, desviación estándar</a></li>
-  <li><a href="#gráfico-de-densidad-histograma-beeswarm-caja-y-brazos" id="toc-gráfico-de-densidad-histograma-beeswarm-caja-y-brazos" class="nav-link" data-scroll-target="#gráfico-de-densidad-histograma-beeswarm-caja-y-brazos">Gráfico de densidad, histograma, beeswarm, caja y brazos</a></li>
-  <li><a href="#gráfico-de-velas-y-algunas-métricasseñales-de-trading" id="toc-gráfico-de-velas-y-algunas-métricasseñales-de-trading" class="nav-link" data-scroll-target="#gráfico-de-velas-y-algunas-métricasseñales-de-trading">Gráfico de velas y algunas métricas/señales de trading</a></li>
+  <li><a href="#cálculo-de-descriptivos" id="toc-cálculo-de-descriptivos" class="nav-link" data-scroll-target="#cálculo-de-descriptivos">Cálculo de descriptivos</a></li>
+  <li><a href="#gráfico-de-densidad-histograma-boxplot-y-velas" id="toc-gráfico-de-densidad-histograma-boxplot-y-velas" class="nav-link" data-scroll-target="#gráfico-de-densidad-histograma-boxplot-y-velas">Gráfico de densidad, histograma, boxplot y velas</a>
+  <ul class="collapse">
+  <li><a href="#historico" id="toc-historico" class="nav-link" data-scroll-target="#historico">Historico</a>
+  <ul class="collapse">
+  <li><a href="#histograma-historico" id="toc-histograma-historico" class="nav-link" data-scroll-target="#histograma-historico">Histograma historico</a></li>
+  <li><a href="#boxplot-historico" id="toc-boxplot-historico" class="nav-link" data-scroll-target="#boxplot-historico">Boxplot historico</a></li>
+  <li><a href="#gráfico-de-velas-historico" id="toc-gráfico-de-velas-historico" class="nav-link" data-scroll-target="#gráfico-de-velas-historico">Gráfico de velas historico</a></li>
+  </ul></li>
+  <li><a href="#primer-trimestre-q1-2025" id="toc-primer-trimestre-q1-2025" class="nav-link" data-scroll-target="#primer-trimestre-q1-2025">Primer trimestre (Q1) 2025</a>
+  <ul class="collapse">
+  <li><a href="#histograma-q3---2025" id="toc-histograma-q3---2025" class="nav-link" data-scroll-target="#histograma-q3---2025">Histograma Q3 - 2025</a></li>
+  <li><a href="#boxplot-q1-2025" id="toc-boxplot-q1-2025" class="nav-link" data-scroll-target="#boxplot-q1-2025">Boxplot Q1 2025</a></li>
+  <li><a href="#grafico-de-velas-q1-2023" id="toc-grafico-de-velas-q1-2023" class="nav-link" data-scroll-target="#grafico-de-velas-q1-2023">Grafico de velas Q1 2023</a></li>
+  </ul></li>
+  <li><a href="#marzo-2025" id="toc-marzo-2025" class="nav-link" data-scroll-target="#marzo-2025">Marzo 2025</a>
+  <ul class="collapse">
+  <li><a href="#histograma-marzo---2025" id="toc-histograma-marzo---2025" class="nav-link" data-scroll-target="#histograma-marzo---2025">Histograma Marzo - 2025</a></li>
+  <li><a href="#boxplot-marzo-2025" id="toc-boxplot-marzo-2025" class="nav-link" data-scroll-target="#boxplot-marzo-2025">Boxplot Marzo 2025</a></li>
+  <li><a href="#gráfico-de-velas-marzo-2025" id="toc-gráfico-de-velas-marzo-2025" class="nav-link" data-scroll-target="#gráfico-de-velas-marzo-2025">Gráfico de velas Marzo 2025</a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#estimación-de-parámetros-gaussianos-agregar-densidades-qqplot-y-distribución-empírica" id="toc-estimación-de-parámetros-gaussianos-agregar-densidades-qqplot-y-distribución-empírica" class="nav-link" data-scroll-target="#estimación-de-parámetros-gaussianos-agregar-densidades-qqplot-y-distribución-empírica">Estimación de parámetros Gaussianos: Agregar densidades, qqplot y distribución empírica</a></li>
   <li><a href="#pruebita" id="toc-pruebita" class="nav-link" data-scroll-target="#pruebita">Pruebita</a></li>
   <li><a href="#estimación-de-parámetros-meixner-agregar-densidades-qqplot-y-distribución-empírica" id="toc-estimación-de-parámetros-meixner-agregar-densidades-qqplot-y-distribución-empírica" class="nav-link" data-scroll-target="#estimación-de-parámetros-meixner-agregar-densidades-qqplot-y-distribución-empírica">Estimación de parámetros Meixner: Agregar densidades, qqplot y distribución empírica</a>
@@ -153,287 +176,105 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyquant)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PortfolioAnalytics)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantmod)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PerformanceAnalytics)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timetk)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moments)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VarianceGamma)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggbeeswarm")</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TTR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="ajustes" class="level1">
-<h1>Ajustes</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos el rango de fechas para la descarga de precios</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># primera_fecha: inicio del periodo de análisis</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>primera_fecha <span class="ot">&lt;-</span> <span class="st">'2019-01-01'</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ultima_fecha: fin del periodo de análisis</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ultima_fecha <span class="ot">&lt;-</span> <span class="st">'2024-12-31'</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#tickers &lt;- c("IENOVA.MX", "KIMBERA.MX", "GMEXICOB.MX", "GAPB.MX", "GCARSOA1.MX", "CUERVO.MX", "MEGACPO.MX", "AC.MX", "GRUMAB.MX", "AMXL.MX", "ALSEA.MX", "LABB.MX", "ALPEKA.MX", "FEMSAUBD.MX", "CEMEXCPO.MX", "TLEVISACPO.MX", "PINFRA.MX", "ASURB.MX", "OMAB.MX", "BIMBOA.MX")</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos el conjunto de tickers o símbolos de los activos financieros que vamos a analizar</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>tickers <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># "^SPX",            # Este está comentado, pero sería el índice S&amp;P500</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BOLSAA.MX"</span>,         <span class="co"># Bolsa Mexicana de Valores</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GFNORTEO.MX"</span>,       <span class="co"># Grupo Financiero Banorte</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GENTERA.MX"</span>,        <span class="co"># Gentera</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GFINBURO.MX"</span>        <span class="co"># Grupo Financiero Inbursa</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargamos precios históricos ajustados para cada ticker usando tq_get de tidyquant</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>descarga_precios <span class="ot">&lt;-</span> tickers <span class="sc">%&gt;%</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tq_get</span>(<span class="at">get =</span> <span class="st">"stock.prices"</span>,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">from =</span> primera_fecha,</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">to =</span> ultima_fecha)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionamos las columnas relevantes: símbolo, fecha y precio ajustado</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Además, ordenamos por fecha</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>df_precios_historicos <span class="ot">&lt;-</span> descarga_precios <span class="sc">%&gt;%</span> </span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(symbol, date, adjusted) <span class="sc">%&gt;%</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(date)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Agrupamos los datos por símbolo para operaciones posteriores</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>descarga_precios <span class="ot">&lt;-</span> descarga_precios <span class="sc">%&gt;%</span> </span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(descarga_precios)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 8
-# Groups:   symbol [1]
-  symbol    date        open  high   low close  volume adjusted
-  &lt;chr&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-1 BOLSAA.MX 2019-01-02  33.5  34.8  33.2  34.4  379836     25.1
-2 BOLSAA.MX 2019-01-03  34.4  35.2  33.8  34.8  419250     25.4
-3 BOLSAA.MX 2019-01-04  34.8  36.0  34    35.7  640052     26.0
-4 BOLSAA.MX 2019-01-07  35.8  36.4  35.2  36.0  474274     26.3
-5 BOLSAA.MX 2019-01-08  36.2  37.9  36.0  36.8  383592     26.9
-6 BOLSAA.MX 2019-01-09  36.9  37.6  36.7  37.2 1667713     27.2</code></pre>
-</div>
-</div>
+<section id="justificación" class="level1">
+<h1>Justificación</h1>
+<p>Grupo Carso y Grupo Financiero Inbursa son dos entidades emblemáticas del empresariado mexicano. Grupo Carso se consolidó como un conglomerado industrial y comercial diversificado, mientras que Grupo Financiero Inbursa se especializó en servicios financieros integrales.</p>
+<p>Grupo Carso se constituyó formalmente en 1980, durante está decáda se expandió en negocios industriales y de consumo como: la tabacalera Cigatam, la llantera Euzkadi, la minera Frisco y el fabricante de cables Condume.Un hito crucial llegó en 1990, cuando adquirió el control de Teléfonos de México (Telmex) durante su privatización. Grupo Carso salió a bolsa en 1990 y continuó creciendo con la compra de la mayoría de acciones de empresas como Sanborns. A partir de 1996, el conglomerado decidió escindir sus operaciones de telecomunicaciones en una entidad separada (Carso Global Telecom, hoy parte de América Móvil) , manteniendo en Grupo Carso negocios diversificados en comercio, industria, energía e infraestructura.</p>
+<p>Por su parte, Grupo Financiero Inbursa se constituyó en septiembre de 1992, agrupando banco, casa de bolsa, aseguradora y afore principalmente. En los años siguientes, Inbursa añadió nuevas líneas de negocio: fundó Banco Inbursa (1993) y empresas de arrendamiento y factoraje; lanzó la Afore Inbursa en 1996 al establecerse el sistema de pensiones privado; e incluso incursionó en alianzas estratégicas, como la compra de Banco Walmart en 2015 para ampliar su presencia en banca de consumo.</p>
+<p>A lo largo de sus décadas de operación, Grupo Carso ha experimentado un crecimiento económico notable, convirtiéndose en uno de los conglomerados más grandes e importantes de México y América Latina. Un indicador de su escala actual son sus ingresos: en 2023, las ventas consolidadas de Grupo Carso alcanzaron aproximadamente 198,455 millones de pesos, con crecimiento anual de 9.3%, además en 2023 registró una utilidad neta de $ 13,519 millones de pesos. Asimismo, grupo Carso genera alrededor de 250 mil empleos directos y más de 500 mil indirectos en México, contribuyendo al desarrollo económico y social más allá de las cifras puramente financieras.</p>
+<p>Grupo Financiero Inbursa, por su parte, durante el 2015 ya se posicionaba entre las instituciones más importantes en el país, con aproximadamente 327,547 millones de pesos en activos y una cartera de crédito total de 237,479 mdp. Esta trayectoria ascendente continuó en la última década, pues al cierre de 2023, los activos de Inbursa superaban los 578 mil millones de pesos, equivalentes a 4.22% de los activos de todo el sistema bancario mexicano. En la misma fecha, su cartera de crédito de cerca 360 mil millones representaba 5.3% de los préstamos bancarios del país. La utilidad neta en 2023 fue de $30,985 millones de pesos, un incremento notable frente a $24,495 millones del año anterior. Cabe destacar que, de acuerdo a la Comisión Nacional Bancaria y de Valores, Banco Inbursa ha sido designado en 2024 como “institución de importancia sistémica local”, entrando al selecto grupo de bancos cuya relevancia es tal que su eventual riesgo podría impactar la estabilidad financiera nacional. Tal clasificación compartida con gigantes como BBVA, Banamex, Banorte, Santander, HSBC y Scotiabank.</p>
+<p>En el caso específico de Inbursa, su participación de mercado en banca lo sitúa consistentemente entre los primeros 5 o 6 bancos de México por tamaño de activos. Inbursa ocupa el cuarto lugar nacional en créditos comerciales otorgados y mantiene cuotas cercanas al 5% en los principales segmentos bancarios, como ya se mencionó.</p>
+<p>La influencia versatil de las compañías clave grupo Carso (incluyendo América Móvil, Telmex, entre otras) es tan grande que su valor bursátil conjunto equivale aproximadamente al 7.6% del PIB de México , y representan cerca del 18% de la capitalización total del mercado accionario nacional.</p>
+<p>El análisis se basa en los precios históricos descargados desde Yahoo Finance, considerando para Grupo Carso datos desde el 14 de marzo del año 2000 hasta la fecha actual, y para Grupo Financiero Inbursa desde el 3 de enero del año 2000 hasta hoy. Estos periodos reflejan la disponibilidad completa de información bursátil proporcionada por la fuente.</p>
 </section>
 <section id="cálculo-de-los-log-rendimientos-diarios" class="level1">
 <h1>Cálculo de los log-rendimientos diarios</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculamos los rendimientos logarítmicos diarios para cada activo</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rendimientos_activos <span class="ot">&lt;-</span> descarga_precios <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select     =</span> adjusted,     <span class="co"># Seleccionamos el precio ajustado</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">mutate_fun =</span> periodReturn, <span class="co"># Función para calcular rendimientos</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">period     =</span> <span class="st">"daily"</span>,      <span class="co"># Periodicidad diaria</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">type       =</span> <span class="st">"log"</span>,        <span class="co"># Tipo de rendimiento: logarítmico</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">col_rename =</span> <span class="st">"returns"</span>)    <span class="co"># Renombramos la nueva columna como "returns"</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Nombres de los instrumentos</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>nombres_instrumentos <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(symbol) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(symbol) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Paleta de colores</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>paleta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#F8766D"</span>, <span class="st">"#7CAE00"</span>, <span class="st">"#00BFC4"</span>, <span class="st">"#C77CFF"</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rendimientos_activos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
 # Groups:   symbol [1]
-  symbol    date       returns
-  &lt;chr&gt;     &lt;date&gt;       &lt;dbl&gt;
-1 BOLSAA.MX 2019-01-02 0      
-2 BOLSAA.MX 2019-01-03 0.0136 
-3 BOLSAA.MX 2019-01-04 0.0235 
-4 BOLSAA.MX 2019-01-07 0.0103 
-5 BOLSAA.MX 2019-01-08 0.0222 
-6 BOLSAA.MX 2019-01-09 0.00945</code></pre>
+  symbol      date        returns
+  &lt;chr&gt;       &lt;date&gt;        &lt;dbl&gt;
+1 GFINBURO.MX 2000-01-03  0      
+2 GFINBURO.MX 2000-01-04 -0.00517
+3 GFINBURO.MX 2000-01-05 -0.00780
+4 GFINBURO.MX 2000-01-06 -0.0238 
+5 GFINBURO.MX 2000-01-07  0.0212 
+6 GFINBURO.MX 2000-01-10  0.0460 </code></pre>
 </div>
 </div>
 </section>
-<section id="cálculo-de-descriptivos-media-mediana-curtosis-skewness-desviación-estándar" class="level1">
-<h1>Cálculo de descriptivos: media, mediana, curtosis, skewness, desviación estándar</h1>
+<section id="cálculo-de-descriptivos" class="level1">
+<h1>Cálculo de descriptivos</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculamos estadísticos descriptivos de los rendimientos:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># media, mediana, desviación estándar, asimetría, curtosis, mínimo y máximo</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>tabla_descriptivos <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(returns),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(returns),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">desviacion =</span> <span class="fu">sqrt</span>(<span class="fu">var</span>(returns)),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">asimetria =</span> moments<span class="sc">::</span><span class="fu">skewness</span>(returns),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">curtosis =</span> moments<span class="sc">::</span><span class="fu">kurtosis</span>(returns),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">minimo =</span> <span class="fu">min</span>(returns),</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">maximo =</span> <span class="fu">max</span>(returns))</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabla_descriptivos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 8
-  symbol         media  mediana desviacion asimetria curtosis minimo maximo
-  &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 BOLSAA.MX   0.000185 0            0.0186     0.447    16.3  -0.125 0.195 
-2 GENTERA.MX  0.000395 0            0.0271     0.222    10.7  -0.157 0.232 
-3 GFINBURO.MX 0.000286 0            0.0219    -0.178     6.51 -0.168 0.0941
-4 GFNORTEO.MX 0.000447 0.000911     0.0227    -0.387     6.03 -0.144 0.0807</code></pre>
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">symbol</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">media</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mediana</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">desviacion</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">asimetria</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">curtosis</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">minimo</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">maximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GCARSOA1.MX</td>
+<td style="text-align: right;">0.0006115</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0220712</td>
+<td style="text-align: right;">0.8465848</td>
+<td style="text-align: right;">28.90746</td>
+<td style="text-align: right;">-0.2738252</td>
+<td style="text-align: right;">0.3672959</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GFINBURO.MX</td>
+<td style="text-align: right;">0.0003707</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0207556</td>
+<td style="text-align: right;">-0.1702899</td>
+<td style="text-align: right;">10.83786</td>
+<td style="text-align: right;">-0.2574524</td>
+<td style="text-align: right;">0.2148333</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
 </section>
-<section id="gráfico-de-densidad-histograma-beeswarm-caja-y-brazos" class="level1">
-<h1>Gráfico de densidad, histograma, beeswarm, caja y brazos</h1>
+<section id="gráfico-de-densidad-histograma-boxplot-y-velas" class="level1">
+<h1>Gráfico de densidad, histograma, boxplot y velas</h1>
+<section id="historico" class="level2">
+<h2 class="anchored" data-anchor-id="historico">Historico</h2>
+<section id="histograma-historico" class="level3">
+<h3 class="anchored" data-anchor-id="histograma-historico">Histograma historico</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma de rendimientos </span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(tick <span class="cf">in</span> nombres_instrumentos){</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">match</span>(tick, nombres_instrumentos)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  graf <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(symbol <span class="sc">==</span> tick) <span class="sc">%&gt;%</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> returns)) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.002</span>, <span class="at">fill =</span> paleta[i], <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(<span class="st">"Histograma de rendimientos - "</span>, tick)) <span class="sc">+</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(graf)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Meixner_files/figure-html/histograma-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Meixner_files/figure-html/histograma%20historico-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Meixner_files/figure-html/histograma-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/histograma-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/histograma-4.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Meixner_files/figure-html/histograma%20historico-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+</section>
+<section id="boxplot-historico" class="level3">
+<h3 class="anchored" data-anchor-id="boxplot-historico">Boxplot historico</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de densidades </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(tick <span class="cf">in</span> nombres_instrumentos){</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">match</span>(tick, nombres_instrumentos)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  graf <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(symbol <span class="sc">==</span> tick) <span class="sc">%&gt;%</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> returns), <span class="at">fill =</span> paleta[i], <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(<span class="st">"Densidad de rendimientos - "</span>, tick)) <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(graf)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/densidades-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/densidades-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/densidades-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/densidades-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Beeswarm por instrumento</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(tick <span class="cf">in</span> nombres_instrumentos){</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">match</span>(tick, nombres_instrumentos)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  graf <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(symbol <span class="sc">==</span> tick) <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> symbol, <span class="at">y =</span> returns)) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_beeswarm</span>(<span class="at">color =</span> paleta[i], <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(<span class="st">"Beeswarm de rendimientos - "</span>, tick)) <span class="sc">+</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(graf)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/beeswarm-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/beeswarm-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/beeswarm-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/beeswarm-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot de rendimientos</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rendimientos_activos, <span class="fu">aes</span>(<span class="at">x =</span> symbol, <span class="at">y =</span> returns, <span class="at">fill =</span> symbol)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> paleta) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Boxplot de rendimientos por activo"</span>) <span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -443,36 +284,9 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="gráfico-de-velas-y-algunas-métricasseñales-de-trading" class="level1">
-<h1>Gráfico de velas y algunas métricas/señales de trading</h1>
+<section id="gráfico-de-velas-historico" class="level3">
+<h3 class="anchored" data-anchor-id="gráfico-de-velas-historico">Gráfico de velas historico</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Gráfico de velas para cada instrumento</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(tick <span class="cf">in</span> nombres_instrumentos){</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">match</span>(tick, nombres_instrumentos)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  nombre_grafico <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"velas_"</span>, <span class="fu">str_sub</span>(tick, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">4</span>))</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  graf_velas <span class="ot">&lt;-</span> descarga_precios <span class="sc">%&gt;%</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(symbol <span class="sc">==</span> tick, date <span class="sc">&gt;=</span> <span class="st">"2022-01-01"</span>) <span class="sc">%&gt;%</span> <span class="co"># puedes ajustar la fecha si quieres ver más periodo</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">color_vela =</span> <span class="fu">ifelse</span>(close <span class="sc">&gt;=</span> open, <span class="st">"Alcista"</span>, <span class="st">"Bajista"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date)) <span class="sc">+</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mechas (de mínimo a máximo)</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> date, <span class="at">y =</span> low, <span class="at">yend =</span> high, <span class="at">color =</span> color_vela)) <span class="sc">+</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cuerpo de la vela (de apertura a cierre)</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> date, <span class="at">y =</span> open, <span class="at">yend =</span> close, <span class="at">color =</span> color_vela),</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Alcista"</span> <span class="ot">=</span> <span class="st">"forestgreen"</span>, <span class="st">"Bajista"</span> <span class="ot">=</span> <span class="st">"firebrick"</span>)) <span class="sc">+</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Gráfico de velas - "</span>, tick),</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">65</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(graf_velas)</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -487,74 +301,125 @@ window.Quarto = {
 </figure>
 </div>
 </div>
+</div>
+</section>
+</section>
+<section id="primer-trimestre-q1-2025" class="level2">
+<h2 class="anchored" data-anchor-id="primer-trimestre-q1-2025">Primer trimestre (Q1) 2025</h2>
+<section id="histograma-q3---2025" class="level3">
+<h3 class="anchored" data-anchor-id="histograma-q3---2025">Histograma Q3 - 2025</h3>
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Meixner_files/figure-html/velas-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Meixner_files/figure-html/histograma_Q3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Meixner_files/figure-html/velas-4.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Meixner_files/figure-html/histograma_Q3-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
+<section id="boxplot-q1-2025" class="level3">
+<h3 class="anchored" data-anchor-id="boxplot-q1-2025">Boxplot Q1 2025</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/boxplot_1T2025-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="grafico-de-velas-q1-2023" class="level3">
+<h3 class="anchored" data-anchor-id="grafico-de-velas-q1-2023">Grafico de velas Q1 2023</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/velas%20Q1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/velas%20Q1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="marzo-2025" class="level2">
+<h2 class="anchored" data-anchor-id="marzo-2025">Marzo 2025</h2>
+<section id="histograma-marzo---2025" class="level3">
+<h3 class="anchored" data-anchor-id="histograma-marzo---2025">Histograma Marzo - 2025</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/histograma%20032025-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/histograma%20032025-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplot-marzo-2025" class="level3">
+<h3 class="anchored" data-anchor-id="boxplot-marzo-2025">Boxplot Marzo 2025</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/boxplot_marzo2025-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gráfico-de-velas-marzo-2025" class="level3">
+<h3 class="anchored" data-anchor-id="gráfico-de-velas-marzo-2025">Gráfico de velas Marzo 2025</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/velas%20marzo-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Meixner_files/figure-html/velas%20marzo-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
 <section id="estimación-de-parámetros-gaussianos-agregar-densidades-qqplot-y-distribución-empírica" class="level1">
 <h1>Estimación de parámetros Gaussianos: Agregar densidades, qqplot y distribución empírica</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Requiere: library(nortest) ya cargada</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(tick <span class="cf">in</span> nombres_instrumentos){</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">match</span>(tick, nombres_instrumentos)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  data_tick <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span> <span class="fu">filter</span>(symbol <span class="sc">==</span> tick)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  returns <span class="ot">&lt;-</span> data_tick<span class="sc">$</span>returns</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Estimación de parámetros</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  mu_gorrito <span class="ot">&lt;-</span> <span class="fu">mean</span>(returns)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  sigma_gorrito <span class="ot">&lt;-</span> <span class="fu">sd</span>(returns)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pruebas de normalidad</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  shapiro <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(returns[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>])  <span class="co"># límite por defecto de la prueba</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  ks <span class="ot">&lt;-</span> <span class="fu">ks.test</span>(returns, <span class="st">"pnorm"</span>, <span class="at">mean =</span> mu_gorrito, <span class="at">sd =</span> sigma_gorrito)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Imprimir resultados</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">======================================</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Ticker:"</span>, tick, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"(media estimada):"</span>, <span class="fu">round</span>(mu_gorrito, <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"(desv. estándar estimada):"</span>, <span class="fu">round</span>(sigma_gorrito, <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"&gt;&gt; Shapiro-Wilk p-valor:"</span>, <span class="fu">round</span>(shapiro<span class="sc">$</span>p.value, <span class="dv">5</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"&gt;&gt; Kolmogorov-Smirnov p-valor:"</span>, <span class="fu">round</span>(ks<span class="sc">$</span>p.value, <span class="dv">5</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gráfico de densidad empírica vs normal</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  graf_densidad <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_tick, <span class="fu">aes</span>(<span class="at">x =</span> returns)) <span class="sc">+</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">fill =</span> paleta[i], <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> mu_gorrito, <span class="at">sd =</span> sigma_gorrito),</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Densidad empírica vs Normal - "</span>, tick),</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Returns"</span>, <span class="at">y =</span> <span class="st">"Densidad"</span>) <span class="sc">+</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># QQ Plot</span></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  graf_qq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_tick, <span class="fu">aes</span>(<span class="at">sample =</span> returns)) <span class="sc">+</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_qq</span>(<span class="at">distribution =</span> qnorm, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">mean =</span> mu_gorrito, <span class="at">sd =</span> sigma_gorrito),</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> paleta[i]) <span class="sc">+</span></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_qq_line</span>(<span class="at">distribution =</span> qnorm, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">mean =</span> mu_gorrito, <span class="at">sd =</span> sigma_gorrito),</span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"QQ Plot - "</span>, tick)) <span class="sc">+</span></span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Mostrar lado a lado</span></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(graf_densidad <span class="sc">|</span> graf_qq)</span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ======================================
-Ticker: BOLSAA.MX 
-(media estimada): 0.000185 
-(desv. estándar estimada): 0.018622 
+Ticker: GCARSOA1.MX 
+(media estimada): 0.000611 
+(desv. estándar estimada): 0.022071 
 &gt;&gt; Shapiro-Wilk p-valor: 0 
 &gt;&gt; Kolmogorov-Smirnov p-valor: 0 </code></pre>
 </div>
@@ -568,48 +433,16 @@ Ticker: BOLSAA.MX
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ======================================
-Ticker: GENTERA.MX 
-(media estimada): 0.000395 
-(desv. estándar estimada): 0.027054 
+Ticker: GFINBURO.MX 
+(media estimada): 0.000371 
+(desv. estándar estimada): 0.020756 
 &gt;&gt; Shapiro-Wilk p-valor: 0 
-&gt;&gt; Kolmogorov-Smirnov p-valor: 1e-05 </code></pre>
+&gt;&gt; Kolmogorov-Smirnov p-valor: 0 </code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="Meixner_files/figure-html/gauss-2.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-======================================
-Ticker: GFINBURO.MX 
-(media estimada): 0.000286 
-(desv. estándar estimada): 0.021943 
-&gt;&gt; Shapiro-Wilk p-valor: 0 
-&gt;&gt; Kolmogorov-Smirnov p-valor: 0.00076 </code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/gauss-3.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-======================================
-Ticker: GFNORTEO.MX 
-(media estimada): 0.000447 
-(desv. estándar estimada): 0.022693 
-&gt;&gt; Shapiro-Wilk p-valor: 0 
-&gt;&gt; Kolmogorov-Smirnov p-valor: 0.00388 </code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Meixner_files/figure-html/gauss-4.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -619,34 +452,34 @@ Ticker: GFNORTEO.MX
 <h1>Pruebita</h1>
 <p>Este código viene de los documentos en R</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar el paquete Runuran</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Runuran)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir los parámetros de la distribución de Meixner</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.0298</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.1271</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fl">0.5729</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.0011</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el objeto de distribución de Meixner</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>distr <span class="ot">&lt;-</span> <span class="fu">udmeixner</span>(<span class="at">alpha =</span> alpha, <span class="at">beta =</span> beta, <span class="at">delta =</span> delta, <span class="at">mu =</span> mu)</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un generador de números aleatorios utilizando el método de inversión</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>gen <span class="ot">&lt;-</span> <span class="fu">pinvd.new</span>(distr)</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar una muestra de tamaño 100</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">ur</span>(gen, <span class="dv">100</span>)</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una secuencia de valores para evaluar la densidad</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular la densidad para cada valor en x_vals</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>densidad <span class="ot">&lt;-</span> <span class="fu">ud</span>(distr, x_vals)</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar la densidad</span></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, densidad, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Densidad de la distribución de Meixner"</span>,</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Densidad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar el paquete Runuran</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Runuran)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir los parámetros de la distribución de Meixner</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.0298</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.1271</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fl">0.5729</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.0011</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el objeto de distribución de Meixner</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>distr <span class="ot">&lt;-</span> <span class="fu">udmeixner</span>(<span class="at">alpha =</span> alpha, <span class="at">beta =</span> beta, <span class="at">delta =</span> delta, <span class="at">mu =</span> mu)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un generador de números aleatorios utilizando el método de inversión</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>gen <span class="ot">&lt;-</span> <span class="fu">pinvd.new</span>(distr)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar una muestra de tamaño 100</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">ur</span>(gen, <span class="dv">100</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una secuencia de valores para evaluar la densidad</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular la densidad para cada valor en x_vals</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>densidad <span class="ot">&lt;-</span> <span class="fu">ud</span>(distr, x_vals)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar la densidad</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, densidad, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Densidad de la distribución de Meixner"</span>,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Densidad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -661,149 +494,145 @@ Ticker: GFNORTEO.MX
 <section id="momentos-empiricos" class="level2">
 <h2 class="anchored" data-anchor-id="momentos-empiricos">Momentos Empiricos</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir el ticker de prueba</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>accion <span class="ot">&lt;-</span> <span class="st">"GFNORTEO.MX"</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>rendimientos_filtrados <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(symbol <span class="sc">==</span> accion)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>rendimientos <span class="ot">&lt;-</span> rendimientos_filtrados<span class="sc">$</span>returns</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Momentos empiricos</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>media_emp <span class="ot">&lt;-</span> <span class="fu">mean</span>(rendimientos); media_emp       </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir el ticker de prueba</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>accion <span class="ot">&lt;-</span> <span class="st">"GCARSOA1.MX"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>rendimientos_filtrados <span class="ot">&lt;-</span> rendimientos_activos <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(symbol <span class="sc">==</span> accion)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>rendimientos <span class="ot">&lt;-</span> rendimientos_filtrados<span class="sc">$</span>returns</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Momentos empiricos</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>media_emp <span class="ot">&lt;-</span> <span class="fu">mean</span>(rendimientos); media_emp       </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0004469815</code></pre>
+<pre><code>[1] 0.0006114769</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>varianza_emp <span class="ot">&lt;-</span> <span class="fu">var</span>(rendimientos);varianza_emp         </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>varianza_emp <span class="ot">&lt;-</span> <span class="fu">var</span>(rendimientos);varianza_emp         </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0005149801</code></pre>
+<pre><code>[1] 0.0004871359</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>asimetria_emp <span class="ot">&lt;-</span> moments<span class="sc">::</span><span class="fu">skewness</span>(rendimientos); asimetria_emp  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>asimetria_emp <span class="ot">&lt;-</span> moments<span class="sc">::</span><span class="fu">skewness</span>(rendimientos); asimetria_emp  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.3865145</code></pre>
+<pre><code>[1] 0.8465848</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>curtosis_emp <span class="ot">&lt;-</span> moments<span class="sc">::</span><span class="fu">kurtosis</span>(rendimientos);curtosis_emp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>curtosis_emp <span class="ot">&lt;-</span> moments<span class="sc">::</span><span class="fu">kurtosis</span>(rendimientos);curtosis_emp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6.031111</code></pre>
+<pre><code>[1] 28.90746</code></pre>
 </div>
 </div>
 </section>
 <section id="función-objetivo" class="level2">
 <h2 class="anchored" data-anchor-id="función-objetivo">Función objetivo</h2>
-<p>La función objetivo que estamos utilizando en la estimación por momentos es la suma de errores cuadráticos entre momentos empíricos y teóricos. Esta elección se basa en una idea sencilla pero poderosa: si queremos que una distribución (en este caso, Meixner) se parezca a nuestros datos, una manera natural es exigir que sus momentos principales —media, varianza, asimetría y curtosis— coincidan con los momentos que calculamos directamente de los datos. Como resolver este sistema de ecuaciones no es posible de forma exacta (por la complejidad no lineal de las expresiones), lo que hacemos es medir qué tan lejos están los momentos teóricos de los empíricos, y tratamos de encontrar los parámetros que minimicen esa diferencia. Usamos la suma de los errores al cuadrado porque penaliza más fuertemente las desviaciones grandes, evita que los errores se cancelen (como ocurriría si usáramos sumas simples), y además tiene propiedades matemáticas útiles: es una función suave, continua y derivable, lo que la hace ideal para métodos numéricos como los que usamos con <code>optim()</code>.</p>
+<p>La función objetivo que estamos utilizando en la estimación por momentos es la suma de errores cuadráticos entre momentos empíricos y teóricos. Esta elección se basa en una idea sencilla; si queremos que una distribución se parezca a nuestros datos, una manera natural es exigir que sus momentos coincidan con los momentos que calculamos directamente de los datos. Como resolver este sistema de ecuaciones no es posible de forma exacta (por la complejidad no lineal de las expresiones), lo que hacemos es medir qué tan lejos están los momentos teóricos de los empíricos, y tratamos de encontrar los parámetros que minimicen esa diferencia. Usamos la suma de los errores al cuadrado porque penaliza más fuertemente las desviaciones grandes, evita que los errores se cancelen (como ocurriría si usáramos sumas simples), y además tiene propiedades matemáticas útiles: es una función suave, continua y derivable, lo que la hace ideal para métodos numéricos como los que usamos con <code>optim()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de pérdida (suma de errores cuadrados entre momentos teóricos y empíricos)</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>loss_meixner <span class="ot">&lt;-</span> <span class="cf">function</span>(par) {</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> par[<span class="dv">1</span>]</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> par[<span class="dv">2</span>]</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> par[<span class="dv">3</span>]</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> par[<span class="dv">4</span>]</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Validación para evitar valores no válidos</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (a <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> d <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> b <span class="sc">&lt;=</span> <span class="sc">-</span>pi <span class="sc">||</span> b <span class="sc">&gt;=</span> pi) {<span class="fu">return</span>(<span class="cn">Inf</span>)}</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Momentos teóricos </span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  mu_teo <span class="ot">&lt;-</span> m <span class="sc">+</span> a <span class="sc">*</span> d <span class="sc">*</span> <span class="fu">tan</span>(b <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  var_teo <span class="ot">&lt;-</span> (a<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> d) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> (<span class="fu">cos</span>(b <span class="sc">/</span> <span class="dv">2</span>))<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  skew_teo <span class="ot">&lt;-</span> <span class="fu">sin</span>(b) <span class="sc">/</span> <span class="fu">sqrt</span>(d <span class="sc">*</span> (<span class="fu">cos</span>(b) <span class="sc">+</span> <span class="dv">1</span>))</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  kurt_teo <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> (<span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="fu">cos</span>(b <span class="sc">/</span> <span class="dv">2</span>))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> d</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  momentos_emp <span class="ot">&lt;-</span> <span class="fu">c</span>(media_emp, varianza_emp, asimetria_emp, curtosis_emp)</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  momentos_teo <span class="ot">&lt;-</span> <span class="fu">c</span>(mu_teo, var_teo, skew_teo, kurt_teo)</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Suma de errores al cuadrado</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>((momentos_teo <span class="sc">-</span> momentos_emp)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de pérdida (suma de errores cuadrados entre momentos teóricos y empíricos)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>loss_meixner <span class="ot">&lt;-</span> <span class="cf">function</span>(par) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> par[<span class="dv">1</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> par[<span class="dv">2</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> par[<span class="dv">3</span>]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> par[<span class="dv">4</span>]</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Validación para evitar valores no válidos</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (a <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> d <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> b <span class="sc">&lt;=</span> <span class="sc">-</span>pi <span class="sc">||</span> b <span class="sc">&gt;=</span> pi) {<span class="fu">return</span>(<span class="cn">Inf</span>)}</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Momentos teóricos </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  mu_teo <span class="ot">&lt;-</span> m <span class="sc">+</span> a <span class="sc">*</span> d <span class="sc">*</span> <span class="fu">tan</span>(b <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  var_teo <span class="ot">&lt;-</span> (a<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> d) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> (<span class="fu">cos</span>(b <span class="sc">/</span> <span class="dv">2</span>))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  skew_teo <span class="ot">&lt;-</span> <span class="fu">sin</span>(b) <span class="sc">/</span> <span class="fu">sqrt</span>(d <span class="sc">*</span> (<span class="fu">cos</span>(b) <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  kurt_teo <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> (<span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="fu">cos</span>(b <span class="sc">/</span> <span class="dv">2</span>))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> d</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  momentos_emp <span class="ot">&lt;-</span> <span class="fu">c</span>(media_emp, varianza_emp, asimetria_emp, curtosis_emp)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  momentos_teo <span class="ot">&lt;-</span> <span class="fu">c</span>(mu_teo, var_teo, skew_teo, kurt_teo)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Suma de errores al cuadrado</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>((momentos_teo <span class="sc">-</span> momentos_emp)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>La función <code>optim()</code> en R es una herramienta general para resolver problemas de minimización numérica. Su sintaxis básica incluye el argumento <code>par</code>, que representa el vector inicial de parámetros desde el cual comienza la búsqueda; <code>fn</code>, que es la función que se desea minimizar; y <code>method</code>, que indica el algoritmo de optimización a utilizar. Entre los métodos más comunes están <em>“BFGS”</em> (rápido, pero no permite restricciones), <em>“Nelder-Mead”</em> (más robusto, aunque más lento), y <em>“L-BFGS-B”</em>, que es el que usamos aquí porque permite establecer límites inferiores y superiores para cada parámetro.</p>
 <p>Estos límites se definen mediante los argumentos <code>lower</code> y <code>upper</code>, los cuales son vectores en donde cada entrada representa una restricción para el parámetro correspondiente. En nuestro caso, significa que imponemos que <span class="math inline">\(a &gt; 0\)</span>, <span class="math inline">\(b &gt; -\pi\)</span>, <span class="math inline">\(d &gt; 0\)</span> , y dejamos <span class="math inline">\(m\)</span> sin límite inferior. De forma similar: limita razonablemente los valores máximos para ( a ), ( b ) y ( d ), y también deja libre a ( m ). Estas restricciones son esenciales para evitar que <code>optim()</code> explore regiones del espacio paramétrico donde las fórmulas de los momentos no están bien definidas, como por ejemplo al evaluar funciones trigonométricas en zonas donde podrían divergir o no estar definidas numéricamente.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>parametros_iniciales <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">m =</span> <span class="dv">0</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Llamar a optim</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">optim</span>(</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">par =</span> parametros_iniciales,  <span class="co"># valores iniciales de los parámetros</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fn =</span> loss_meixner,  <span class="co"># la función que vamos a minimizar</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>, <span class="co"># metodo con limites</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="sc">-</span>pi <span class="sc">+</span> <span class="fl">0.01</span>, <span class="fl">0.0001</span>, <span class="sc">-</span><span class="cn">Inf</span>),  <span class="co"># límites inferiores</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="dv">10</span>, pi <span class="sc">-</span> <span class="fl">0.01</span>, <span class="dv">100</span>, <span class="cn">Inf</span>)           <span class="co"># límites superiores</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver resultado</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ajuste<span class="sc">$</span>par)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>parametros_iniciales <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">m =</span> <span class="dv">0</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Llamar a optim</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">optim</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">par =</span> parametros_iniciales,  <span class="co"># valores iniciales de los parámetros</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fn =</span> loss_meixner,  <span class="co"># la función que vamos a minimizar</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>, <span class="co"># metodo con limites</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="sc">-</span>pi <span class="sc">+</span> <span class="fl">0.01</span>, <span class="fl">0.0001</span>, <span class="sc">-</span><span class="cn">Inf</span>),  <span class="co"># límites inferiores</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="dv">10</span>, pi <span class="sc">-</span> <span class="fl">0.01</span>, <span class="dv">100</span>, <span class="cn">Inf</span>)           <span class="co"># límites superiores</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver resultado</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ajuste<span class="sc">$</span>par)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           a            b            d            m 
- 0.056123646 -0.323418709  0.347018433  0.003665123 </code></pre>
+<pre><code>          a           b           d           m 
+0.104283141 0.245699574 0.039759572 0.006595164 </code></pre>
 </div>
 </div>
 </section>
 <section id="ajuste" class="level2">
 <h2 class="anchored" data-anchor-id="ajuste">Ajuste</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>a_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">1</span>]</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>b_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">2</span>]</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">3</span>]</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>m_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">4</span>]</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear la distribución Meixner ajustada</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>distr <span class="ot">&lt;-</span> <span class="fu">udmeixner</span>(<span class="at">alpha =</span> a_hat, <span class="at">beta =</span> b_hat, <span class="at">delta =</span> d_hat, <span class="at">mu =</span> m_hat)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Secuencia de valores para evaluar la densidad teórica</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(rendimientos), <span class="fu">max</span>(rendimientos), <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular la densidad Meixner ajustada en esos puntos</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>densidad_meixner <span class="ot">&lt;-</span> <span class="fu">ud</span>(distr, x_vals)</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear data frame para graficar</span></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>df_densidad <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> x_vals,</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">densidad =</span> densidad_meixner</span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar histograma y densidad empírica vs Meixner</span></span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(rendimientos), <span class="fu">aes</span>(<span class="at">x =</span> rendimientos)) <span class="sc">+</span></span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">150</span>, <span class="at">fill =</span> <span class="st">"orchid"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>,<span class="at">linetype=</span><span class="st">"dashed"</span> ) <span class="sc">+</span>  <span class="co"># Densidad empírica</span></span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> df_densidad, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> densidad), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Densidad empírica vs Meixner ajustada - "</span>, accion),</span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Rendimientos"</span>, <span class="at">y =</span> <span class="st">"Densidad"</span>) <span class="sc">+</span></span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
-ℹ Please use `after_stat(density)` instead.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>a_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">1</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>b_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">2</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">3</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>m_hat <span class="ot">&lt;-</span> ajuste<span class="sc">$</span>par[<span class="dv">4</span>]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear la distribución Meixner ajustada</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>distr <span class="ot">&lt;-</span> <span class="fu">udmeixner</span>(<span class="at">alpha =</span> a_hat, <span class="at">beta =</span> b_hat, <span class="at">delta =</span> d_hat, <span class="at">mu =</span> m_hat)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Secuencia de valores para evaluar la densidad teórica</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(rendimientos), <span class="fu">max</span>(rendimientos), <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular la densidad Meixner ajustada en esos puntos</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>densidad_meixner <span class="ot">&lt;-</span> <span class="fu">ud</span>(distr, x_vals)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear data frame para graficar</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>df_densidad <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> x_vals,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">densidad =</span> densidad_meixner</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar histograma y densidad empírica vs Meixner</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(rendimientos), <span class="fu">aes</span>(<span class="at">x =</span> rendimientos)) <span class="sc">+</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">150</span>, <span class="at">fill =</span> <span class="st">"orchid"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>,<span class="at">linetype=</span><span class="st">"dashed"</span> ) <span class="sc">+</span>  <span class="co"># Densidad empírica</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> df_densidad, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> densidad), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Densidad empírica vs Meixner ajustada - "</span>, accion),</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Rendimientos"</span>, <span class="at">y =</span> <span class="st">"Densidad"</span>) <span class="sc">+</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Meixner_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Meixner_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># Para reproducibilidad</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>muestra_meixner <span class="ot">&lt;-</span> <span class="fu">ur</span>(<span class="fu">pinvd.new</span>(distr), <span class="at">n =</span> <span class="fu">length</span>(rendimientos))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un data frame con cuantiles empíricos y Meixner simulados</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>qq_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sort</span>(muestra_meixner),     <span class="co"># Cuantiles teóricos (Meixner)</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">sort</span>(rendimientos)         <span class="co"># Cuantiles empíricos (datos reales)</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar el QQ plot</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(qq_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"mediumorchid"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"QQ Plot - Meixner ajustada vs datos reales: "</span>, accion),</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Cuantiles teóricos (Meixner)"</span>,</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cuantiles empíricos (rendimientos)"</span></span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># Para reproducibilidad</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>muestra_meixner <span class="ot">&lt;-</span> <span class="fu">ur</span>(<span class="fu">pinvd.new</span>(distr), <span class="at">n =</span> <span class="fu">length</span>(rendimientos))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un data frame con cuantiles empíricos y Meixner simulados</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>qq_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sort</span>(muestra_meixner),     <span class="co"># Cuantiles teóricos (Meixner)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">sort</span>(rendimientos)         <span class="co"># Cuantiles empíricos (datos reales)</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar el QQ plot</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(qq_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"mediumorchid"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"QQ Plot - Meixner ajustada vs datos reales: "</span>, accion),</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Cuantiles teóricos (Meixner)"</span>,</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cuantiles empíricos (rendimientos)"</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Meixner_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Meixner_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
