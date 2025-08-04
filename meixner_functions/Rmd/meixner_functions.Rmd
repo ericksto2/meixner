@@ -3,12 +3,108 @@ title: "Funciones Meinxer"
 author: "Erick Soto"
 output: 
   html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-
-
 
 ```{r setup, echo=FALSE, include=FALSE, warning=FALSE, message=FALSE}
 rm(list = ls(all.names = TRUE))
 ```
 
-Hola es una prueba
+```{r}
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(stringr)
+library(tidyquant)
+library(ggtext)
+library(glue)
+library(ggrepel)
+library(GGally)
+library(corrplot)
+library(PortfolioAnalytics)
+library(quantmod)
+library(PerformanceAnalytics)
+library(timetk)
+library(patchwork)
+library(moments)
+library(knitr)
+library(VarianceGamma)
+library(xts)
+#install.packages("ggbeeswarm")
+library(ggbeeswarm)
+library(TTR)
+library(purrr)
+
+library(LSMRealOptions)
+```
+
+
+# 1. Función: obtener_datos 
+
+**Descripción:** Descarga precios ajustados de un ticker desde Yahoo
+Finance, calcula sus rendimientos logarítmicos y exporta un CSV.
+
+**Parámetros:**
+
+-   ticker Símbolo financiero, p.ej. "AAPL" o "MSFT"
+
+-   fecha_inicio "YYYY-MM-DD"
+
+-   fecha_fin "YYYY-MM-DD"
+
+**Valor de retorno:**
+Data frame con columnas: Fecha, Precio ajustado, Rendimiento logarítmico diario, produce además un archivo CSV llamado rendimientos `ticker.csv` y un txt con el valor del utlimo precio `S0.txt`
+
+```{r funciones-rendimientos, echo=TRUE}
+
+obtener_datos <- function(ticker, fecha_inicio, fecha_fin) {
+
+  #Descargamos precios
+  precios <- tq_get(ticker, get = "stock.prices", from = fecha_inicio, to = fecha_fin)
+  
+  #Calculamos log-rendimientos
+  rendimientos <- precios %>% 
+    select(date, adjusted) %>%
+    arrange(date)%>%
+    tq_transmute(select = adjusted, mutate_fun = periodReturn, 
+                 period= "daily", type = "log", col_rename = "returns")
+  #S0
+  s0 <- precios %>%
+    pull(adjusted) %>%
+    last()
+  
+  #Creamos CSV
+  ruta <- "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data"
+  nombre_csv <- paste0("rendimientos_", tolower(ticker),".csv")
+  write.csv(rendimientos, file.path(ruta,nombre_csv))
+  
+  #Creamos txt
+  ticker_clean <- gsub("[^[:alnum:]]", "_", tolower(ticker))
+  nombre_txt <- paste0("s0_", ticker_clean, ".txt")
+  writeLines(as.character(s0), con = file.path(ruta, nombre_txt))
+  
+  return(list(rendimientos=rendimientos, s0=s0))
+}
+
+
+```
+
+
+
+```{r obtenemos datos}
+
+fecha_inicio<- "2018-01-02"
+fecha_fin<- "2025-08-01"
+
+#obtener_datos(ticker = "GFINBURO.MX", fecha_inicio, fecha_fin)
+#obtener_datos(ticker = "GCARSOA1.MX", fecha_inicio, fecha_fin)
+
+rendimientos_inbursa <- read.csv("C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/rendimientos_gfinburo.mx.csv")
+
+rendimientos_carso <- read.csv("C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/rendimientos_gcarsoa1.mx.csv")
+
+```
+
