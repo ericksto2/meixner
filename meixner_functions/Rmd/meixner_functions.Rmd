@@ -1,0 +1,14 @@
+---
+title: "Funciones Meinxer"
+author: "Erick Soto"
+output: 
+  html_document
+---
+
+
+
+```{r setup, echo=FALSE, include=FALSE, warning=FALSE, message=FALSE}
+rm(list = ls(all.names = TRUE))
+```
+
+Hola es una prueba

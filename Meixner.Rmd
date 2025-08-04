@@ -12,7 +12,7 @@ editor: visual
 rm(list = ls(all.names = TRUE))
 ```
 
-```{r librerías, warning=FALSE, message=FALSE, include=FALSE}
+```{r librerías, warning=FALSE, message=FALSE, include=FALSE, echo=FALSE}
 library(ggplot2)
 library(dplyr)
 library(readr)
@@ -37,6 +37,12 @@ library(ggbeeswarm)
 library(TTR)
 library(purrr)
 
+library(LSMRealOptions)
+
+#Phyton
+library(reticulate)
+
+
 ```
 
 
@@ -49,10 +55,9 @@ Grupo Carso se constituyó formalmente en 1980, durante está decáda se expandi
 Por su parte, Grupo Financiero Inbursa se constituyó en septiembre de 1992, agrupando banco, casa de bolsa, aseguradora y afore principalmente. En los años siguientes, Inbursa añadió nuevas  líneas de negocio: fundó Banco Inbursa (1993) y empresas de arrendamiento y factoraje; lanzó la Afore Inbursa en 1996 al establecerse el sistema de pensiones privado; e incluso incursionó en alianzas  estratégicas, como la compra de Banco Walmart en 2015 para ampliar su presencia en banca de  consumo.
  
  
-A lo largo de sus décadas de operación, Grupo Carso ha experimentado un crecimiento económico notable, convirtiéndose en uno de los conglomerados más grandes e importantes de México y América Latina.  Un indicador de su escala actual son sus ingresos: en 2023, las ventas consolidadas de Grupo Carso alcanzaron aproximadamente 198,455 millones de pesos, con crecimiento anual de 9.3%, además en 2023 registró una utilidad neta de \$ 13,519 millones de pesos. Asimismo, grupo Carso genera alrededor de 250 mil empleos directos y más de 500 mil indirectos en  México, contribuyendo al desarrollo económico y social más allá de las cifras puramente financieras.
+ A lo largo de sus décadas de operación, Grupo Carso ha experimentado un crecimiento económico notable, convirtiéndose en uno de los conglomerados más grandes e importantes de México y América Latina. Un indicador de su escala actual son sus ingresos: en 2024, las ventas consolidadas de Grupo Carso alcanzaron aproximadamente 202,983 millones de pesos, con un crecimiento anual de 2.3%. Además, en 2024 registró una utilidad neta de 14,970 millones de pesos, lo que representó un incremento del 10.7% respecto al año anterior. Asimismo, Grupo Carso genera alrededor de 250 mil empleos directos y más de 500 mil indirectos en México, contribuyendo al desarrollo económico y social más allá de las cifras puramente financieras
  
- 
-Grupo Financiero Inbursa, por su parte, durante el 2015 ya se posicionaba entre las instituciones más importantes en el país, con aproximadamente 327,547 millones de pesos en activos y una  cartera de crédito total de 237,479 mdp. Esta trayectoria ascendente continuó en la última década, pues al  cierre de 2023, los activos de Inbursa superaban los 578 mil millones de pesos, equivalentes a 4.22%  de los activos de todo el sistema bancario mexicano. En la misma fecha, su cartera de crédito de cerca 360 mil millones representaba 5.3% de los préstamos bancarios del país. La utilidad neta en 2023 fue de \$30,985 millones de pesos, un incremento notable frente a \$24,495 millones del año anterior. Cabe destacar que, de acuerdo a la Comisión Nacional Bancaria y de Valores, Banco Inbursa ha sido designado en 2024 como “institución de importancia sistémica local”, entrando al selecto grupo de bancos cuya relevancia es tal que su eventual riesgo podría impactar la  estabilidad financiera nacional. Tal clasificación compartida con gigantes como BBVA, Banamex, Banorte, Santander, HSBC y Scotiabank. 
+Grupo Financiero Inbursa, por su parte, durante el 2015 ya se posicionaba entre las instituciones más importantes en el país, con aproximadamente 327,547 millones de pesos en activos y una cartera de crédito total de 237,479 mdp. Esta trayectoria ascendente continuó en la última década, pues al cierre de 2024, los activos de Inbursa alcanzaron los 691,200 millones de pesos, equivalentes a aproximadamente el 4.5% de los activos de todo el sistema bancario mexicano. En la misma fecha, su cartera de crédito de 493,911 millones representaba cerca del 5.8% de los préstamos bancarios del país. La utilidad neta en 2024 fue de 34,464 millones de pesos, un incremento del 11.2% respecto a los 30,985 millones del año anterior. Cabe destacar que, de acuerdo a la Comisión Nacional Bancaria y de Valores, Banco Inbursa ha sido designado en 2024 como “institución de importancia sistémica local”, entrando al selecto grupo de bancos cuya relevancia es tal que su eventual riesgo podría impactar la estabilidad financiera nacional. Tal clasificación compartida con gigantes como BBVA, Banamex, Banorte, Santander, HSBC y Scotiabank.
 
 En el caso específico de Inbursa, su participación de mercado en banca lo sitúa consistentemente  entre los primeros 5 o 6 bancos de México por tamaño de activos. Inbursa ocupa el cuarto  lugar nacional en créditos comerciales otorgados y mantiene cuotas cercanas al 5% en los principales  segmentos bancarios, como ya se mencionó.
 
@@ -60,59 +65,387 @@ La influencia versatil de las compañías clave grupo Carso (incluyendo América
 
 El análisis se basa en los precios históricos descargados desde Yahoo Finance, considerando para Grupo Carso datos desde el 14 de marzo del año 2000 hasta la fecha actual, y para Grupo Financiero Inbursa desde el 3 de enero del año 2000 hasta hoy. Estos periodos reflejan la disponibilidad completa de información bursátil proporcionada por la fuente.
 
+
+# 0. Simulación de v.a.i.i Meixner 
+
+## 0.1. Simulación aceptación rechazo
+
+## 0.2. Simulación de trayectorias 
+
+### 0.2.1. Tilley
+
+```{r función_de_rachas}
+
+funcion_rachas_call <- function(secuencia){
+
+  rachas   <- rle(secuencia)
+  longs    <- rachas$lengths
+  valores  <- rachas$values
+  n        <- length(valores)
+
+  pos_uno  <- which(valores == 1)[1] |> as.numeric()
+
+  # si no hay ningún 1, salimos con NA
+  if (is.na(pos_uno)) return(NA)
+
+  condicion <- TRUE
+  while (condicion) {
+
+    numbers <- pos_uno:n
+    filtro  <- if (pos_uno %% 2 == 0)
+                 numbers[numbers %% 2 == 1]
+               else
+                 numbers[numbers %% 2 == 0]
+
+    #si filtro quedó vacío, detenemos el bucle
+    if (length(filtro) == 0) {
+      condicion <- FALSE
+    } else if (longs[pos_uno] < max(longs[filtro]) && pos_uno <= n) {
+      pos_uno <- pos_uno + 2
+    } else {
+      condicion <- FALSE
+    }
+  }
+
+  if (pos_uno > n) {
+    j <- NA
+  } else {
+    j <- cumsum(longs[1:(pos_uno-1)]) |> tail(1) + 1
+  }
+  return(j)
+}
+
+```
+
+
+```{r}
+funcion_rachas <- function(secuencia){
+  if (sum(secuencia) == length(secuencia)){          # puros 1 siempre ejercer
+    return(1L)
+  } else if (sum(secuencia) == 0){                   # puros 0 nunca ejercer
+    return(NA)
+  } else {
+    funcion_rachas_call(secuencia)                   # caso ideal
+  }
+}
+
+```
+
+
+
+```{r tilley_funcion}
+# ------------------------ función tilley --------------------------
+
+valuar_opcion_tilley <- function(tipo_opcion = c("call", "put"),
+                                 n = 100,
+                                 t = 1,           
+                                 mu = 0.05,
+                                 sigma = 0.2,
+                                 S0 = 100,
+                                 dt = 1/20,
+                                 K = 100,          
+                                 Q = 10,           
+                                 semilla = NULL) {
+  
+  tipo_opcion <- match.arg(tipo_opcion)
+  if(!is.null(semilla)) set.seed(semilla)
+  
+  # ---------- 1. Simulación GBM ----------------------------------------------
+  Simulated <- GBM_simulate(n = n,
+                            t = t,
+                            mu = mu,
+                            sigma = sigma,
+                            S0 = S0,
+                            dt = dt)
+  
+  df_simulaciones <- Simulated |> t() |> data.frame()
+  
+  # ---------- 2. Se definen las variables que definen las dimensiones del dataframe de simulaciones -----
+  
+  n_tiempos <- ncol(df_simulaciones)
+  df_simulaciones <- df_simulaciones |> mutate(ID = 1:n)
+  n_trays <- nrow(df_simulaciones)
+  M <- n_trays/Q
+  
+  # ---------- 3. Funcion payoff ---------
+  
+  fn_payoff_call <- function(x){pmax(x-K,0)}
+  fn_payoff_put <- function(x){pmax(K-x,0)}
+  
+  fn_payoff <- if (tipo_opcion == "call") fn_payoff_call else fn_payoff_put
+
+  # --------- 4.dataframe de payoffs ----------
+  columna   <- paste0("X", n_tiempos)          
+  valor_col <- paste0("valor", n_tiempos)      
+  df_valores <- df_simulaciones[c("ID", columna)] |>
+                mutate(payoff = fn_payoff(.data[[columna]])) |>
+                select(ID, payoff)
+
+  names(df_valores)[2] <- valor_col   
+  
+  #------- 5. Dataframe de jotas ---------
+  
+  df_jotas <- data.frame(tiempo = integer(), J = numeric(), coloreados = character())
+
+  # ---------- 6. Bucle backward -------------------------------------------
+  for (iter in (n_tiempos - 1):1) {
+
+    nombre_actual <- paste0("X", iter)          
+    nombre_futuro <- paste0("valor", iter + 1) 
+
+    # unir precio actual + valor futuro
+    df_temp <- cbind(df_valores[c("ID", nombre_futuro)],
+                   df_simulaciones[nombre_actual])
+
+    # payoff inmediato
+    df_temp <- df_temp |>
+             mutate(payoff_actual = fn_payoff(.data[[nombre_actual]]))
+
+    # ordenar según el tipo de opción
+    if (tipo_opcion == "call") {
+      df_temp <- df_temp |> arrange(.data[[nombre_actual]])          # ascendente
+    } else {                             # put
+      df_temp <- df_temp |> arrange(desc(.data[[nombre_actual]]))    # descendente
+    }
+
+    # asignar ID temporal y grupos
+    df_temp <- df_temp |>
+             mutate(ID_temp = 1:n_trays,
+                    grupo   = rep(1:Q, each = M)) |>
+             group_by(grupo) |>
+             mutate(vp_promedio = mean(.data[[nombre_futuro]])) |>
+             ungroup() |>
+             mutate(x = if_else(payoff_actual >= vp_promedio, 1, 0))
+
+    # determinar j estrella con la regla de rachas 
+    j_estrella <- funcion_rachas(df_temp$x)
+
+    # colorear y fijar el valor actual
+    if (is.na(j_estrella)) {
+      df_temp <- df_temp |> mutate(valores = vp_promedio)
+      IDs_coloreados <- NA
+    } else {
+      df_temp <- df_temp |>
+               mutate(valores = if_else(ID_temp >= j_estrella,
+                                        payoff_actual,
+                                        vp_promedio))
+      IDs_coloreados <- df_temp |>
+                      filter(ID_temp >= j_estrella) |>
+                      pull(ID) |> paste(collapse = ",")
+    }
+
+    df_jotas <- rbind(df_jotas,
+                    data.frame(tiempo = iter,
+                               J = j_estrella,
+                               coloreados = IDs_coloreados))
+
+    # agregar la columna valor_iter al dataframe de valores
+    nombre_valor_actual <- paste0("valor", iter)
+    df_temp <- df_temp |> select(ID, valores) |>
+             arrange(ID) |> select(valores)
+    names(df_temp) <- nombre_valor_actual
+    df_valores <- cbind(df_valores, df_temp)
+    }
+
+    
+    df_jotas <- df_jotas |> mutate(tiempo = as.integer(tiempo))
+    
+    # ---------- 7. Matriz de ejercicios por trayectoria -----------------
+    vec_tiempos <- df_jotas$tiempo              # tiempos con frontera detectada
+    df_ejercicios <- data.frame(ID = 1:n_trays) # contenedor inicial
+    
+    for (t in vec_tiempos){
+      carac <- df_jotas |>                    # lista de IDs “coloreados” en ese t
+               filter(tiempo == t) |> 
+               pull(coloreados)
+      vector_result <- unlist(strsplit(carac, ",")) |> as.numeric()
+      colm <- rep(0, n_trays)
+      if (!is.na(vector_result[1])) colm[vector_result] <- 1
+      df_ejercicios <- cbind(setNames(data.frame(colm), paste0("t", t)),
+                             df_ejercicios)
+    }
+
+    # ---------- 7. Primera fecha de ejercicio por trayectoria ------------
+    df_primera_t <- data.frame(ID = NA, tiempo = NA)
+    
+    IDs_trayectorias <- df_ejercicios$ID
+    for (id in IDs_trayectorias){
+      vals <- df_ejercicios |> filter(ID == id) |> unlist()
+      vals <- head(vals, -1)                 
+      primer_t <- which(vals == 1)[1]
+      df_primera_t <- rbind(df_primera_t, c(id, primer_t))
+    }
+    df_primera_t <- df_primera_t[-1, ]        
+    df_primera_t <- df_primera_t |> 
+                    mutate(tiempo = as.integer(tiempo))
+    
+    # ---------- 8. Gráfico de la primera t --------------------------------
+    df_plot <- df_primera_t |> filter(!is.na(tiempo))
+
+    grafico_primera_t <- ggplot(df_plot, aes(x = tiempo, y = 0)) +
+    geom_boxplot() +
+    geom_jitter(width = 0.3, height = 0.09) +
+    theme_light()
+    
+    #grafico_primera_t <- df_primera_t |> 
+      #ggplot() +
+      #geom_boxplot(aes(x = factor(tiempo))) +
+      #geom_jitter(aes(x = factor(tiempo), y = 0),
+      #           width = 0.05, height = 0.05) +
+      #theme_light()
+    
+    
+
+  return(list(tipo_opcion   = tipo_opcion,
+              K             = K,
+              Q             = Q,
+              dt            = dt,
+              df_simulaciones = df_simulaciones,
+              df_valores=df_valores,
+              df_jotas = df_jotas,
+              df_ejercicios    = df_ejercicios,   
+              df_primera_t     = df_primera_t,    
+              grafico_primera_t = grafico_primera_t
+            ))
+  
+}
+
+```
+
+
+```{r tilley_funcion_implementacion}
+
+set.seed(1234567)
+ej <- valuar_opcion_tilley(tipo_opcion = "call",
+                           n = 100, 
+                           t = 1, 
+                           dt = 1/20,
+                           mu = 0.05, 
+                           sigma = 0.2,
+                           S0 = 100, 
+                           K = 100, 
+                           Q = 10)
+
+ej$df_simulaciones 
+ej$df_valores
+ej$df_jotas
+ej$df_ejercicios
+ej$df_primera_t
+ej$grafico_primera_t
+```
+
+
+### 0.2.2. Longstaff-Schwartz
+
+```{r}
+
+# Crear entorno virtual (solo se hace una vez)
+if (!virtualenv_exists("r-reticulate")) {
+  virtualenv_create("r-reticulate")
+}
+
+# Activar entorno
+use_virtualenv("r-reticulate", required = TRUE)
+
+# Instalar paquetes necesarios (solo la primera vez)
+#py_install(c("numpy", "pandas", "matplotlib", "yfinance"))
+#py_install("scikit-learn")
+
+# Cargar tu script de Python
+source_python("longstaff_y_schwarz.py") 
+
+df_s1 <- as.data.frame(S1)
+head(df_s1)
+
+```
+
+
+### 0.2.3. Descarga de datos
+
+
+
 ```{r cargar_datos, include=FALSE, warning=FALSE, message=FALSE}
 
-tickers <- c("GFINBURO.MX", "GCARSOA1.MX")
+#tickers <- c("GFINBURO.MX", "GCARSOA1.MX")
 
-fechas_inicio <- c("2000-01-03", "2000-03-14")
-fecha_final <- "2025-05-14"
-
-
-descarga_precios <- map2_df(tickers, fechas_inicio,
-  ~ tq_get(.x,
-           get = "stock.prices",
-           from = .y,
-           to = fecha_final)
-)
-
-df_precios_historicos <- descarga_precios %>%
-  select(symbol, date, adjusted) %>%
-  arrange(date)
+#fechas_inicio <- c("2018-01-02", "2018-01-02")
+#fecha_final <- "2025-05-14"
 
 
-descarga_precios <- descarga_precios %>%
-  group_by(symbol)
+#descarga_precios <- map2_df(tickers, fechas_inicio,
+ # ~ tq_get(.x,
+  #         get = "stock.prices",
+   #        from = .y,
+    #       to = fecha_final)
+#)
+
+#df_precios_historicos <- descarga_precios %>%
+ # select(symbol, date, adjusted) %>%
+  #arrange(date)
+
+
+#descarga_precios <- descarga_precios %>%
+ # group_by(symbol)
 
 
 ```
 
-# Cálculo de los log-rendimientos diarios
+#### Cálculo de los log-rendimientos diarios
 
 ```{r logrendimientos diarios, echo=FALSE, warning=FALSE, message=FALSE}
 
 # Calculamos los rendimientos logarítmicos diarios para cada activo
-rendimientos_activos <- descarga_precios %>%
-  tq_transmute(select     = adjusted,     # Seleccionamos el precio ajustado
-               mutate_fun = periodReturn, # Función para calcular rendimientos
-               period     = "daily",      # Periodicidad diaria
-               type       = "log",        # Tipo de rendimiento: logarítmico
-               col_rename = "returns")    # Renombramos la nueva columna como "returns"
+#rendimientos_activos <- descarga_precios %>%
+ # tq_transmute(select     = adjusted,     # Seleccionamos el precio ajustado
+  #             mutate_fun = periodReturn, # Función para calcular rendimientos
+   #            period     = "daily",      # Periodicidad diaria
+    #           type       = "log",        # Tipo de rendimiento: logarítmico
+     #          col_rename = "returns")    # Renombramos la nueva columna como "returns"
 
 # Nombres de los instrumentos
-nombres_instrumentos <- rendimientos_activos %>% 
-  dplyr::select(symbol) %>% 
-  unique() %>%
-  pull(symbol) %>% 
-  sort()
+#nombres_instrumentos <- rendimientos_activos %>% 
+ #dplyr::select(symbol) %>% 
+  #unique() %>%
+  #pull(symbol) %>% 
+  #sort()
 
 #Paleta de colores
 paleta <- c( "blue","gray")
 
-head(rendimientos_activos)
+#head(rendimientos_activos)
 
 ```
 
-# Cálculo de descriptivos
+
+
+```{r exportar datos, echo=FALSE, include=FALSE, warning=FALSE, message=FALSE}
+
+
+#ruta_csv <- "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/rendimientos_diarios.csv"  
+
+#readr::write_csv(rendimientos_activos, ruta_csv)
+
+#rendimientos_activos <- readr::read_csv(ruta_csv, show_col_types = FALSE)
+
+
+```
+
+
+```{r, importar_datos,echo=FALSE, warning=FALSE, message=FALSE}
+
+rendimientos_activos <- read.csv("C:/Users/erick/OneDrive/Documentos/Tesis/meixner/rendimientos_diarios.csv")
+
+# Nombres de los instrumentos
+nombres_instrumentos <- rendimientos_activos %>% 
+ dplyr::select(symbol) %>% 
+  unique() %>%
+  pull(symbol) %>% 
+  sort()
+
+
+```
+
+#### Cálculo de descriptivos
 
 ```{r estadisticos descriptivos, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -129,14 +462,12 @@ kable(tabla_descriptivos)%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 ```
+#### Gráfico de densidad, histograma, boxplot y velas (Historico)
 
-# Gráfico de densidad, histograma, boxplot y velas
-
-## Historico
-
-### Histograma historico
 
 ```{r histograma historico, echo=FALSE, warning=FALSE, message=FALSE}
+
+
 
 for(tick in nombres_instrumentos){
   i <- match(tick, nombres_instrumentos)
@@ -156,7 +487,6 @@ for(tick in nombres_instrumentos){
 
 ```
 
-### Boxplot historico
 
 ```{r boxplot, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -170,7 +500,6 @@ ggplot(rendimientos_activos, aes(x = symbol, y = returns, fill = symbol)) +
 
 ```
 
-### Gráfico de velas historico
 
 ```{r velas, warning=FALSE, message=FALSE, echo=FALSE}
  
@@ -179,7 +508,7 @@ for(tick in nombres_instrumentos){
 
   graf_velas <- descarga_precios %>%
     filter(symbol == tick) %>%
-    mutate(periodo = lubridate::floor_date(date, unit = "6 months")) %>%  # unidad de tiempo
+    mutate(periodo = lubridate::floor_date(date, unit = "2 months")) %>%  # unidad de tiempo
     group_by(periodo) %>%
     summarise(
       open = first(open),
@@ -208,9 +537,8 @@ for(tick in nombres_instrumentos){
 
 ```
 
-## Primer trimestre (Q1) 2025 
+#### Gráfico de densidad, histograma, boxplot y velas (Q1 2025)
 
-### Histograma Q3 - 2025
   
 ```{r histograma_Q3, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -238,7 +566,6 @@ for(tick in nombres_instrumentos){
   
 ```
 
-### Boxplot Q1 2025
 
 ```{r boxplot_1T2025, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -256,7 +583,6 @@ ggplot(rend_q1_2025, aes(x = symbol, y = returns, fill = symbol)) +
   theme(plot.title = element_text(size = 12))
 ```
   
-### Grafico de velas Q1 2023
 
 ```{r velas Q1, warning=FALSE, message=FALSE, echo=FALSE}
  
@@ -296,9 +622,8 @@ for(tick in nombres_instrumentos){
 
 ```
 
-## Marzo 2025
+#### Gráfico de densidad, histograma, boxplot y velas ( Marzo 2025)
 
-### Histograma Marzo - 2025
   
 ```{r histograma 032025, echo=FALSE, warning=FALSE, message=FALSE} 
 
@@ -327,7 +652,6 @@ for(tick in nombres_instrumentos){
 ```
 
 
-### Boxplot Marzo 2025
 
 ```{r boxplot_marzo2025, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -345,8 +669,6 @@ ggplot(rend_marzo_2025, aes(x = symbol, y = returns, fill = symbol)) +
   theme(plot.title = element_text(size = 12))
 ```
 
-
-### Gráfico de velas Marzo 2025
 
 ```{r velas marzo, warning=FALSE, message=FALSE, echo=FALSE}
  
@@ -385,8 +707,16 @@ for(tick in nombres_instrumentos){
 
 ```
 
+### 0.1.4 Gráficos Montecarlo Normal vs Montecarlo Meixner
 
-# Estimación de parámetros Gaussianos: Agregar densidades, qqplot y distribución empírica
+
+# 1. Rutina de estimación de parámetros 
+
+## 1.1. Teta de Esscher 
+
+## 1.2. Normal
+
+### Estimación de parámetros Gaussianos: Agregar densidades, qqplot y distribución empírica
 
 ```{r gauss, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=5}
 
@@ -437,7 +767,9 @@ for(tick in nombres_instrumentos){
 
 ```
 
-# Pruebita
+## 1.3 Meixner
+
+### Pruebita
 
 Este código viene de los documentos en R
 
@@ -474,14 +806,14 @@ plot(x_vals, densidad, type = "l", col = "blue",
 
 ```
 
-# Estimación de parámetros Meixner: Agregar densidades, qqplot y distribución empírica
+### Estimación de parámetros Meixner: Agregar densidades, qqplot y distribución empírica
 
-## Momentos Empiricos
+#### Momentos Empiricos
 
 
 ```{r}
 # Definir el ticker de prueba
-accion <- "GCARSOA1.MX"
+accion <- "GFINBURO.MX"
 
 rendimientos_filtrados <- rendimientos_activos %>%
   filter(symbol == accion)
@@ -495,7 +827,7 @@ asimetria_emp <- moments::skewness(rendimientos); asimetria_emp
 curtosis_emp <- moments::kurtosis(rendimientos);curtosis_emp
 ```
 
-## Función objetivo
+#### Función objetivo
 
 La función objetivo que estamos utilizando en la estimación por momentos es la suma de errores cuadráticos entre momentos empíricos y teóricos. Esta elección se basa en una idea sencilla; si queremos que una distribución se parezca a nuestros datos, una manera natural es exigir que sus momentos coincidan con los momentos que calculamos directamente de los datos. Como resolver este sistema de ecuaciones no es posible de forma exacta (por la complejidad no lineal de las expresiones), lo que hacemos es medir qué tan lejos están los momentos teóricos de los empíricos, y tratamos de encontrar los parámetros que minimicen esa diferencia. Usamos la suma de los errores al cuadrado porque penaliza más fuertemente las desviaciones grandes, evita que los errores se cancelen (como ocurriría si usáramos sumas simples), y además tiene propiedades matemáticas útiles: es una función suave, continua y derivable, lo que la hace ideal para métodos numéricos como los que usamos con `optim()`.
 
@@ -545,7 +877,7 @@ print(ajuste$par)
 
 
 ```
-## Ajuste
+#### Ajuste
 
 ```{r}
 
@@ -606,16 +938,13 @@ ggplot(qq_data, aes(x = x, y = y)) +
 ```
 
 
-# Resolución numérica de la ecuación martingala Meixner
 
-# Densidades Meixner y Gaussiano en el mundo riesgo neutro
+# 2. Rutina de simulación de trayectoria 
 
-# Prima Black-Scholes Europea
 
-# Prima Meixner Europea
 
-# Prima Americana Arbol Forward
 
-# Simulaciones Gaussianas
 
-# Simulaciones Meixner
+
+
+
