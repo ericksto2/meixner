@@ -45,32 +45,29 @@ library(reticulate)
 
 ```
 
-
 # Justificación
 
-Grupo Carso y Grupo Financiero Inbursa son dos entidades emblemáticas del empresariado mexicano. Grupo Carso se consolidó como un conglomerado  industrial y comercial diversificado, mientras que Grupo Financiero Inbursa se especializó en  servicios financieros integrales. 
+Grupo Carso y Grupo Financiero Inbursa son dos entidades emblemáticas del empresariado mexicano. Grupo Carso se consolidó como un conglomerado industrial y comercial diversificado, mientras que Grupo Financiero Inbursa se especializó en servicios financieros integrales.
 
-Grupo Carso se constituyó formalmente en 1980, durante está decáda se expandió en negocios industriales y de consumo como: la tabacalera Cigatam, la llantera Euzkadi, la minera Frisco y el fabricante de cables Condume.Un hito  crucial llegó en 1990, cuando adquirió el control de Teléfonos de México (Telmex) durante su privatización. Grupo Carso salió a bolsa en 1990 y continuó creciendo con la compra de la  mayoría de acciones de empresas como Sanborns. A partir  de 1996, el conglomerado decidió escindir sus operaciones de telecomunicaciones en una entidad separada (Carso Global Telecom, hoy parte de América Móvil) , manteniendo en Grupo Carso  negocios diversificados en comercio, industria, energía e infraestructura.  
- 
-Por su parte, Grupo Financiero Inbursa se constituyó en septiembre de 1992, agrupando banco, casa de bolsa, aseguradora y afore principalmente. En los años siguientes, Inbursa añadió nuevas  líneas de negocio: fundó Banco Inbursa (1993) y empresas de arrendamiento y factoraje; lanzó la Afore Inbursa en 1996 al establecerse el sistema de pensiones privado; e incluso incursionó en alianzas  estratégicas, como la compra de Banco Walmart en 2015 para ampliar su presencia en banca de  consumo.
- 
- 
- A lo largo de sus décadas de operación, Grupo Carso ha experimentado un crecimiento económico notable, convirtiéndose en uno de los conglomerados más grandes e importantes de México y América Latina. Un indicador de su escala actual son sus ingresos: en 2024, las ventas consolidadas de Grupo Carso alcanzaron aproximadamente 202,983 millones de pesos, con un crecimiento anual de 2.3%. Además, en 2024 registró una utilidad neta de 14,970 millones de pesos, lo que representó un incremento del 10.7% respecto al año anterior. Asimismo, Grupo Carso genera alrededor de 250 mil empleos directos y más de 500 mil indirectos en México, contribuyendo al desarrollo económico y social más allá de las cifras puramente financieras
- 
+Grupo Carso se constituyó formalmente en 1980, durante está decáda se expandió en negocios industriales y de consumo como: la tabacalera Cigatam, la llantera Euzkadi, la minera Frisco y el fabricante de cables Condume.Un hito crucial llegó en 1990, cuando adquirió el control de Teléfonos de México (Telmex) durante su privatización. Grupo Carso salió a bolsa en 1990 y continuó creciendo con la compra de la mayoría de acciones de empresas como Sanborns. A partir de 1996, el conglomerado decidió escindir sus operaciones de telecomunicaciones en una entidad separada (Carso Global Telecom, hoy parte de América Móvil) , manteniendo en Grupo Carso negocios diversificados en comercio, industria, energía e infraestructura.
+
+Por su parte, Grupo Financiero Inbursa se constituyó en septiembre de 1992, agrupando banco, casa de bolsa, aseguradora y afore principalmente. En los años siguientes, Inbursa añadió nuevas líneas de negocio: fundó Banco Inbursa (1993) y empresas de arrendamiento y factoraje; lanzó la Afore Inbursa en 1996 al establecerse el sistema de pensiones privado; e incluso incursionó en alianzas estratégicas, como la compra de Banco Walmart en 2015 para ampliar su presencia en banca de consumo.
+
+A lo largo de sus décadas de operación, Grupo Carso ha experimentado un crecimiento económico notable, convirtiéndose en uno de los conglomerados más grandes e importantes de México y América Latina. Un indicador de su escala actual son sus ingresos: en 2024, las ventas consolidadas de Grupo Carso alcanzaron aproximadamente 202,983 millones de pesos, con un crecimiento anual de 2.3%. Además, en 2024 registró una utilidad neta de 14,970 millones de pesos, lo que representó un incremento del 10.7% respecto al año anterior. Asimismo, Grupo Carso genera alrededor de 250 mil empleos directos y más de 500 mil indirectos en México, contribuyendo al desarrollo económico y social más allá de las cifras puramente financieras
+
 Grupo Financiero Inbursa, por su parte, durante el 2015 ya se posicionaba entre las instituciones más importantes en el país, con aproximadamente 327,547 millones de pesos en activos y una cartera de crédito total de 237,479 mdp. Esta trayectoria ascendente continuó en la última década, pues al cierre de 2024, los activos de Inbursa alcanzaron los 691,200 millones de pesos, equivalentes a aproximadamente el 4.5% de los activos de todo el sistema bancario mexicano. En la misma fecha, su cartera de crédito de 493,911 millones representaba cerca del 5.8% de los préstamos bancarios del país. La utilidad neta en 2024 fue de 34,464 millones de pesos, un incremento del 11.2% respecto a los 30,985 millones del año anterior. Cabe destacar que, de acuerdo a la Comisión Nacional Bancaria y de Valores, Banco Inbursa ha sido designado en 2024 como “institución de importancia sistémica local”, entrando al selecto grupo de bancos cuya relevancia es tal que su eventual riesgo podría impactar la estabilidad financiera nacional. Tal clasificación compartida con gigantes como BBVA, Banamex, Banorte, Santander, HSBC y Scotiabank.
 
-En el caso específico de Inbursa, su participación de mercado en banca lo sitúa consistentemente  entre los primeros 5 o 6 bancos de México por tamaño de activos. Inbursa ocupa el cuarto  lugar nacional en créditos comerciales otorgados y mantiene cuotas cercanas al 5% en los principales  segmentos bancarios, como ya se mencionó.
+En el caso específico de Inbursa, su participación de mercado en banca lo sitúa consistentemente entre los primeros 5 o 6 bancos de México por tamaño de activos. Inbursa ocupa el cuarto lugar nacional en créditos comerciales otorgados y mantiene cuotas cercanas al 5% en los principales segmentos bancarios, como ya se mencionó.
 
-La influencia versatil de las compañías clave grupo Carso (incluyendo América Móvil, Telmex, entre otras) es tan grande que su valor bursátil conjunto equivale aproximadamente al 7.6% del PIB de México , y representan  cerca del 18% de la capitalización total del mercado accionario nacional.
+La influencia versatil de las compañías clave grupo Carso (incluyendo América Móvil, Telmex, entre otras) es tan grande que su valor bursátil conjunto equivale aproximadamente al 7.6% del PIB de México , y representan cerca del 18% de la capitalización total del mercado accionario nacional.
 
 El análisis se basa en los precios históricos descargados desde Yahoo Finance, considerando para Grupo Carso datos desde el 14 de marzo del año 2000 hasta la fecha actual, y para Grupo Financiero Inbursa desde el 3 de enero del año 2000 hasta hoy. Estos periodos reflejan la disponibilidad completa de información bursátil proporcionada por la fuente.
 
-
-# 0. Simulación de v.a.i.i Meixner 
+# 0. Simulación de v.a.i.i Meixner
 
 ## 0.1. Simulación aceptación rechazo
 
-## 0.2. Simulación de trayectorias 
+## 0.2. Simulación de trayectorias
 
 ### 0.2.1. Tilley
 
@@ -117,7 +114,6 @@ funcion_rachas_call <- function(secuencia){
 
 ```
 
-
 ```{r}
 funcion_rachas <- function(secuencia){
   if (sum(secuencia) == length(secuencia)){          # puros 1 siempre ejercer
@@ -130,8 +126,6 @@ funcion_rachas <- function(secuencia){
 }
 
 ```
-
-
 
 ```{r tilley_funcion}
 # ------------------------ función tilley --------------------------
@@ -312,7 +306,6 @@ valuar_opcion_tilley <- function(tipo_opcion = c("call", "put"),
 
 ```
 
-
 ```{r tilley_funcion_implementacion}
 
 set.seed(1234567)
@@ -333,7 +326,6 @@ ej$df_ejercicios
 ej$df_primera_t
 ej$grafico_primera_t
 ```
-
 
 ### 0.2.2. Longstaff-Schwartz
 
@@ -359,10 +351,7 @@ head(df_s1)
 
 ```
 
-
 ### 0.2.3. Descarga de datos
-
-
 
 ```{r cargar_datos, include=FALSE, warning=FALSE, message=FALSE}
 
@@ -416,8 +405,6 @@ paleta <- c( "blue","gray")
 
 ```
 
-
-
 ```{r exportar datos, echo=FALSE, include=FALSE, warning=FALSE, message=FALSE}
 
 
@@ -429,7 +416,6 @@ paleta <- c( "blue","gray")
 
 
 ```
-
 
 ```{r, importar_datos,echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -462,8 +448,8 @@ kable(tabla_descriptivos)%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 ```
-#### Gráfico de densidad, histograma, boxplot y velas (Historico)
 
+#### Gráfico de densidad, histograma, boxplot y velas (Historico)
 
 ```{r histograma historico, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -487,7 +473,6 @@ for(tick in nombres_instrumentos){
 
 ```
 
-
 ```{r boxplot, echo=FALSE, warning=FALSE, message=FALSE}
 
 # Boxplot de rendimientos
@@ -499,7 +484,6 @@ ggplot(rendimientos_activos, aes(x = symbol, y = returns, fill = symbol)) +
   theme(plot.title = element_text(size = 12))
 
 ```
-
 
 ```{r velas, warning=FALSE, message=FALSE, echo=FALSE}
  
@@ -539,7 +523,6 @@ for(tick in nombres_instrumentos){
 
 #### Gráfico de densidad, histograma, boxplot y velas (Q1 2025)
 
-  
 ```{r histograma_Q3, echo=FALSE, warning=FALSE, message=FALSE}
 
 for(tick in nombres_instrumentos){
@@ -566,7 +549,6 @@ for(tick in nombres_instrumentos){
   
 ```
 
-
 ```{r boxplot_1T2025, echo=FALSE, warning=FALSE, message=FALSE}
 
 # Filtrado para el primer trimestre de 2025
@@ -582,7 +564,6 @@ ggplot(rend_q1_2025, aes(x = symbol, y = returns, fill = symbol)) +
   ggtitle("Boxplot de rendimientos - 1er trimestre 2025") +
   theme(plot.title = element_text(size = 12))
 ```
-  
 
 ```{r velas Q1, warning=FALSE, message=FALSE, echo=FALSE}
  
@@ -624,8 +605,7 @@ for(tick in nombres_instrumentos){
 
 #### Gráfico de densidad, histograma, boxplot y velas ( Marzo 2025)
 
-  
-```{r histograma 032025, echo=FALSE, warning=FALSE, message=FALSE} 
+```{r histograma 032025, echo=FALSE, warning=FALSE, message=FALSE}
 
 for(tick in nombres_instrumentos){
   i <- match(tick, nombres_instrumentos)
@@ -651,8 +631,6 @@ for(tick in nombres_instrumentos){
 
 ```
 
-
-
 ```{r boxplot_marzo2025, echo=FALSE, warning=FALSE, message=FALSE}
 
 # Filtrado para marzo 2025
@@ -668,7 +646,6 @@ ggplot(rend_marzo_2025, aes(x = symbol, y = returns, fill = symbol)) +
   ggtitle("Boxplot de rendimientos - Marzo 2025") +
   theme(plot.title = element_text(size = 12))
 ```
-
 
 ```{r velas marzo, warning=FALSE, message=FALSE, echo=FALSE}
  
@@ -709,10 +686,9 @@ for(tick in nombres_instrumentos){
 
 ### 0.1.4 Gráficos Montecarlo Normal vs Montecarlo Meixner
 
+# 1. Rutina de estimación de parámetros
 
-# 1. Rutina de estimación de parámetros 
-
-## 1.1. Teta de Esscher 
+## 1.1. Teta de Esscher
 
 ## 1.2. Normal
 
@@ -810,7 +786,6 @@ plot(x_vals, densidad, type = "l", col = "blue",
 
 #### Momentos Empiricos
 
-
 ```{r}
 # Definir el ticker de prueba
 accion <- "GFINBURO.MX"
@@ -858,7 +833,7 @@ loss_meixner <- function(par) {
 
 La función `optim()` en R es una herramienta general para resolver problemas de minimización numérica. Su sintaxis básica incluye el argumento `par`, que representa el vector inicial de parámetros desde el cual comienza la búsqueda; `fn`, que es la función que se desea minimizar; y `method`, que indica el algoritmo de optimización a utilizar. Entre los métodos más comunes están *"BFGS"* (rápido, pero no permite restricciones), *"Nelder-Mead"* (más robusto, aunque más lento), y *"L-BFGS-B"*, que es el que usamos aquí porque permite establecer límites inferiores y superiores para cada parámetro.
 
-Estos límites se definen mediante los argumentos `lower` y `upper`, los cuales son vectores en donde cada entrada representa una restricción para el parámetro correspondiente. En nuestro caso, significa que imponemos que $a > 0$, $b > -\pi$,  $d > 0$ , y dejamos $m$  sin límite inferior. De forma similar: limita razonablemente los valores máximos para ( a ), ( b ) y ( d ), y también deja libre a ( m ). Estas restricciones son esenciales para evitar que `optim()` explore regiones del espacio paramétrico donde las fórmulas de los momentos no están bien definidas, como por ejemplo al evaluar funciones trigonométricas en zonas donde podrían divergir o no estar definidas numéricamente.
+Estos límites se definen mediante los argumentos `lower` y `upper`, los cuales son vectores en donde cada entrada representa una restricción para el parámetro correspondiente. En nuestro caso, significa que imponemos que $a > 0$, $b > -\pi$, $d > 0$ , y dejamos $m$ sin límite inferior. De forma similar: limita razonablemente los valores máximos para ( a ), ( b ) y ( d ), y también deja libre a ( m ). Estas restricciones son esenciales para evitar que `optim()` explore regiones del espacio paramétrico donde las fórmulas de los momentos no están bien definidas, como por ejemplo al evaluar funciones trigonométricas en zonas donde podrían divergir o no estar definidas numéricamente.
 
 ```{r}
 parametros_iniciales <- c(a = 1, b = 0, d = 1, m = 0)
@@ -877,6 +852,7 @@ print(ajuste$par)
 
 
 ```
+
 #### Ajuste
 
 ```{r}
@@ -912,6 +888,7 @@ ggplot(data = data.frame(rendimientos), aes(x = rendimientos)) +
 
 
 ```
+
 ```{r}
 
 set.seed(123)  # Para reproducibilidad
@@ -937,14 +914,4 @@ ggplot(qq_data, aes(x = x, y = y)) +
 
 ```
 
-
-
-# 2. Rutina de simulación de trayectoria 
-
-
-
-
-
-
-
-
+# 2. Rutina de simulación de trayectoria

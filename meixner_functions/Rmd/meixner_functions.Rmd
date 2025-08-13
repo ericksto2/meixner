@@ -41,7 +41,7 @@ library(purrr)
 #nstall.packages("plotly")
 library(plotly)
 library(LSMRealOptions)
-
+library(Runuran)
 ```
 
 
@@ -267,7 +267,7 @@ graficos <- function(df) {
                         dn.col = "firebrick3")
   dev.off()
 
-  return("Gráficos generados y guardados en la carpeta de outputs.")
+  return(list(g_precio, g_vela_hist, g_vela_q1))
 }
 
 ```
@@ -502,13 +502,297 @@ par_rn_nomal_inbursa <- calculo_params_rn_normal(par_normal_inbursa, r); par_nor
 ```
 
 
-# 7. Función: graficos_meixner
+# 7. Funciones: Densidad Meixner
 
-```{r funcion_graficos_meixner, warning=FALSE, message=FALSE}
+## 7.1 Cálculos de las densidades y distribución Meixner ajustadas
 
+**Parámetros:**
+
+- Vector de parámetros mundo real, vector de parámetros riesgo neutro y dataframe de rendimientos del activo
+
+**Valor de reotrno:**
+
+- Dataframe con cuatro columnas - mallado de puntos, densidad real, distribución real y densidad riesgo neutro
+
+
+
+```{r densidad meixner funcion}
+
+calculo_densidad_distribucion_meixner <- function(vect_params,
+                                                  vect_params_rn,
+                                                  df_rendimientos_activos){
+
+    a <- vect_params[1]
+    b <- vect_params[2]
+    d <- vect_params[3]
+    m <- vect_params[4]
+    
+    a_rn <- vect_params_rn[1]
+    b_rn <- vect_params_rn[2]
+    d_rn <- vect_params_rn[3]
+    m_rn <- vect_params_rn[4]
+    
+    rendimientos <- na.omit(df_rendimientos_activos$returns)
+    
+    # Cálculo de la densidad Meixner ajustada
+    x <- seq(from = min(rendimientos), to = max(rendimientos), length.out = 150)
+    distr <- Runuran::udmeixner(alpha=a, beta=b, delta=d, mu=m)
+    gen <- Runuran::pinvd.new(distr)
+    valores_densidad <- Runuran::ud(gen, x)
+    # Cálculo de la distribucion Meixner ajustada
+    valores_distribucion <- Runuran::up(gen, x)
+    
+    # Cálculo de la densidad Meixner riesgo neutro
+    distr_rn <- Runuran::udmeixner(alpha=a_rn, beta=b_rn, delta=d_rn, mu=m_rn)
+    gen_rn <- Runuran::pinvd.new(distr_rn)
+    valores_densidad_rn <- Runuran::ud(gen_rn, x)
+    
+    df_densidad_ajustada <- data.frame(x = x,
+                                       valores_densidad = valores_densidad,
+                                       valores_distribucion = valores_distribucion,
+                                       valores_densidad_rn = valores_densidad_rn)
+    
+    return(df_densidad_ajustada)
+}
+```
+
+```{r densidad meixner}
+densidad_meixner_carso <- calculo_densidad_distribucion_meixner(par_meixner_carso, par_rn_meixner_carso, rendimientos_carso); head(densidad_meixner_carso)
+
+densidad_meixner_inbursa <- calculo_densidad_distribucion_meixner(par_meixner_inbursa, par_rn_meixner_inbursa, rendimientos_inbursa); head(densidad_meixner_inbursa)
+
+```
+
+
+## 7.2 Cálculo de cuantiles Meixner ajustada
+
+**Parámetros:**
+
+- Vector de parámetros mundo real y vector de rendimientos del activo
+
+**Valor de reotrno:**
+
+- Dataframe con dos columnas - cuantiles empíricos de los rendims y cuantiles ajustados
+
+
+```{r funcion cuantiles meixner}
+calculo_cuantiles_distribucion_meixner <- function(vect_params, df_rendimientos_activo){
+
+    a <- vect_params[1]
+    b <- vect_params[2]
+    d <- vect_params[3]
+    m <- vect_params[4]
+    
+    rendimientos <- na.omit(df_rendimientos_activo$returns)
+    
+    x <- seq(from = min(rendimientos), to = max(rendimientos), length.out = 150)
+    distr <- Runuran::udmeixner(alpha=a, beta=b, delta=d, mu=m)
+    gen <- Runuran::pinvd.new(distr)
+    n <- 150
+    probas <- ((1:n)-0.5)/n
+    cuantiles_empi <- quantile(rendimientos, probs = probas, na.rm = TRUE)
+    names(cuantiles_empi) <- NULL
+    cuantiles_teo <- Runuran::uq(gen, probas)
+    df_cuantiles <- data.frame(cuant_empiricos = cuantiles_empi,
+                               cuant_teoricos = cuantiles_teo)
+    return(df_cuantiles)
+}
 
 
 ```
+
+```{r cuantiles meixner}
+
+cuantiles_meixner_carso <- calculo_cuantiles_distribucion_meixner(par_meixner_carso, rendimientos_carso)
+
+cuantiles_meixner_inbursa <- calculo_cuantiles_distribucion_meixner(par_meixner_inbursa, rendimientos_inbursa)
+
+
+```
+
+## 7.3 Graficos Meixner y Normal
+
+```{r funcion_graficos_meixner, warning=FALSE, message=FALSE}
+dibuja_distribuciones <- function(tick,
+                                  tabla_descriptivos,
+                                  df_rendimientos_activos,
+                                  df_densidad_ajustada){
+  
+    descriptivos_part <- tabla_descriptivos
+    media <- descriptivos_part$Media
+    desv_est <- descriptivos_part$Desviacion_Estandar
+    
+    titulo_densidad <- glue::glue(
+    'Densidades ajustadas ',
+    "<span style='color:{color_modelo}'>**",nombre_modelo,"**</span>", " y ",
+    "<span style='color:{color_gaussiano}'>**Normal**</span>"
+    )
+    
+    titulo_distribucion <- glue::glue(
+    'Distribuciones ajustadas ',
+    "<span style='color:{color_modelo}'>**",nombre_modelo,"**</span>", " y ",
+    "<span style='color:{color_gaussiano}'>**Normal**</span>"
+    )
+    
+    titulo_qqnorm <- glue::glue(
+    'Gráfico cuantil-cuantil ',
+    "<span style='color:{color_gaussiano}'>**Normal**</span>"
+    )
+    
+    titulo_densidad_rn <- glue::glue(
+    'Densidad riesgo neutro ',
+    "<span style='color:{color_modelo}'>**",nombre_modelo,"**</span>"
+    )
+    
+    graf_densidad <- df_rendimientos_activos |>
+      ggplot() +
+      stat_density(aes(x = returns), alpha = 0.3, fill = "green") +
+      stat_function(fun = dnorm, args = list(mean = media, sd = desv_est),
+                    color = color_gaussiano) +
+      geom_line(data = df_densidad_ajustada,
+                aes(x = x, y = valores_densidad), color = color_modelo) +
+      ggtitle(label = titulo_densidad, subtitle = tick) +
+      xlab("") + ylab("") +
+      theme_light() +
+      theme(
+        plot.title = ggtext::element_markdown()
+    )
+    
+    graf_distribucion <- df_rendimientos_activos |>
+      ggplot() +
+      stat_function(fun = pnorm, args = list(mean = media, sd = desv_est),
+                    color = color_gaussiano) +
+      geom_line(data = df_densidad_ajustada, 
+                aes(x = x, y = valores_distribucion), color = color_modelo) +
+      stat_ecdf(aes(x = returns), geom = "step", color  = "green") +
+      ggtitle(label = titulo_distribucion, subtitle = tick) +
+      xlab("") + ylab("") +
+      theme_light() +
+      theme(
+        plot.title = ggtext::element_markdown()
+    )
+    
+    graf_qqnorm <- df_rendimientos_activos %>% ggplot(aes(sample = returns)) +
+      stat_qq_line(color = color_gaussiano) +
+      stat_qq(color = "green", size = 1) +
+      ggtitle(label = titulo_qqnorm, subtitle = tick) + 
+      xlab("") + ylab("") +
+      theme_light() +
+      theme(
+        plot.title = ggtext::element_markdown()
+    )
+    
+    graf_densidad_rn <- df_rendimientos_activos |>
+      ggplot() +
+      stat_density(aes(x = returns), alpha = 0.2, fill = "green") +
+      geom_line(data = df_densidad_ajustada,
+                aes(x = x, y = valores_densidad), color = color_modelo, linetype="twodash") +
+      geom_line(data = df_densidad_ajustada,
+                aes(x = x, y = valores_densidad_rn), color = color_modelo) +
+      ggtitle(label = titulo_densidad_rn, subtitle = tick) +
+      xlab("") + ylab("") +
+      theme_light() +
+      theme(
+        plot.title = ggtext::element_markdown()
+    )
+    
+    lista_retorno <- list(graf_densidad, graf_distribucion, graf_qqnorm, graf_densidad_rn)
+    names(lista_retorno) <- c("densidad",
+                              "distribucion",
+                              "CuantilNormal",
+                              "densidadRiesgoNeutro")
+    return(lista_retorno)
+}
+
+
+```
+
+
+```{r densidad normal grafica, warning=FALSE, message=FALSE}
+dibuja_densidad_rn_normal <- function(tick,
+                                      df_rendimientos_activos,
+                                      vector_params_normal,
+                                      vector_params_rn_normal){
+
+  media <- vector_params_normal[1]
+  desv_est <- vector_params_normal[2]
+  
+  media_rn <- vector_params_rn_normal[1]
+  desv_est_rn <- vector_params_rn_normal[2]
+  
+  titulo_densidad_rn_normal <- glue::glue(
+  'Densidad riesgo neutro ',
+  "<span style='color:{color_gaussiano}'>**Normal**</span>"
+  )
+   
+  graf_densidad_rn_normal <- df_rendimientos_activos |>
+    ggplot() +
+    stat_density(aes(x = returns), alpha = 0.2, fill = "green") +
+    stat_function(fun = dnorm, args = list(mean = media, sd = desv_est),
+                  color = color_gaussiano, linetype="twodash") +
+    stat_function(fun = dnorm, args = list(mean = media_rn, sd = desv_est_rn),
+                  color = color_gaussiano) +
+    ggtitle(label = titulo_densidad_rn_normal, subtitle = tick) +
+    xlab("") + ylab("") +
+    theme_light() +
+    theme(
+      plot.title = ggtext::element_markdown()
+  )
+  return(graf_densidad_rn_normal)
+}
+```
+  
+  
+```{r cuantiles_meixner, warning=FALSE, message=FALSE}
+  
+  dibuja_cuantiles_meixner <- function(tick, df_cuantiles){
+  
+  titulo_cuantil <- glue::glue(
+  'Gráfico cuantil-cuantil ',
+  "<span style='color:{color_modelo}'>**",nombre_modelo,"**</span>"
+  )
+  
+  graf_cuantiles <- df_cuantiles %>% ggplot() + 
+    geom_abline(slope = 1, color=color_modelo) +
+    geom_point(aes(x = cuant_empiricos, y = cuant_teoricos), color = "green") +
+    ggtitle(label = titulo_cuantil, subtitle = tick) +
+    xlab("") + ylab("") +
+    theme_light() +
+    theme(
+      plot.title = ggtext::element_markdown()
+  )
+  
+  return(graf_cuantiles)
+}
+
+```
+
+
+```{r graficos meixner inbursa, warning=FALSE, message=FALSE}
+
+color_gaussiano <- "orangered3"
+# Nombre del modelo Meixner
+nombre_modelo <- "Meixner"
+# Color del modelo Meixner
+color_modelo <- "navyblue"
+dibuja_distribuciones("INBURSA", desc_inbur, rendimientos_inbursa, densidad_meixner_inbursa)
+dibuja_densidad_rn_normal("INBURSA", rendimientos_inbursa, par_normal_inbursa, par_rn_nomal_inbursa)
+dibuja_cuantiles_meixner("INBURSA", cuantiles_meixner_inbursa)
+
+```
+```{r graficos meixner carso, warning=FALSE, message=FALSE}
+
+color_gaussiano <- "orangered3"
+# Nombre del modelo Meixner
+nombre_modelo <- "Meixner"
+# Color del modelo Meixner
+color_modelo <- "navyblue"
+dibuja_distribuciones("CARSO", desc_carso, rendimientos_carso, densidad_meixner_carso)
+dibuja_densidad_rn_normal("CARSO", rendimientos_carso, par_meixner_carso, par_rn_meixner_carso)
+dibuja_cuantiles_meixner("CARSO", cuantiles_meixner_carso)
+
+```
+
 
 
 # 8. Función Exportar Datos Phyton
@@ -541,5 +825,6 @@ write.csv(data_inbursa, "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixne
 write.csv(data_carso, "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/data_carso.csv")
 
 ```
+
 
 
