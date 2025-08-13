@@ -12,7 +12,8 @@ editor_options:
 rm(list = ls(all.names = TRUE))
 ```
 
-```{r}
+```{r librerias, echo=FALSE, include=FALSE, warning=FALSE, message=FALSE}
+
 library(ggplot2)
 library(dplyr)
 library(readr)
@@ -37,8 +38,10 @@ library(xts)
 library(ggbeeswarm)
 library(TTR)
 library(purrr)
-
+#nstall.packages("plotly")
+library(plotly)
 library(LSMRealOptions)
+
 ```
 
 
@@ -58,36 +61,28 @@ Finance, calcula sus rendimientos logarítmicos y exporta un CSV.
 **Valor de retorno:**
 Data frame con columnas: Fecha, Precio ajustado, Rendimiento logarítmico diario, produce además un archivo CSV llamado rendimientos `ticker.csv` y un txt con el valor del utlimo precio `S0.txt`
 
-```{r funciones-rendimientos, echo=TRUE}
+```{r funciones_rendimientos}
 
 obtener_datos <- function(ticker, fecha_inicio, fecha_fin) {
 
   #Descargamos precios
   precios <- tq_get(ticker, get = "stock.prices", from = fecha_inicio, to = fecha_fin)
   
-  #Calculamos log-rendimientos
-  rendimientos <- precios %>% 
-    select(date, adjusted) %>%
-    arrange(date)%>%
-    tq_transmute(select = adjusted, mutate_fun = periodReturn, 
-                 period= "daily", type = "log", col_rename = "returns")
-  #S0
-  s0 <- precios %>%
-    pull(adjusted) %>%
-    last()
+  # Calculamos log-rendimientos y los agregamos como columna
+  precios <- precios %>%
+    arrange(date) %>%
+    mutate(
+      returns = c(NA, diff(log(adjusted)))  # Log-rendimientos diarios
+    )
   
   #Creamos CSV
   ruta <- "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data"
-  nombre_csv <- paste0("rendimientos_", tolower(ticker),".csv")
-  write.csv(rendimientos, file.path(ruta,nombre_csv))
+  nombre_csv <- paste0("precios_rendimientos_", tolower(ticker),".csv")
+  write.csv(precios, file.path(ruta,nombre_csv))
   
-  #Creamos txt
-  ticker_clean <- gsub("[^[:alnum:]]", "_", tolower(ticker))
-  nombre_txt <- paste0("s0_", ticker_clean, ".txt")
-  writeLines(as.character(s0), con = file.path(ruta, nombre_txt))
-  
-  return(list(rendimientos=rendimientos, s0=s0))
+  return(precios)
 }
+
 
 
 ```
@@ -99,12 +94,452 @@ obtener_datos <- function(ticker, fecha_inicio, fecha_fin) {
 fecha_inicio<- "2018-01-02"
 fecha_fin<- "2025-08-01"
 
-#obtener_datos(ticker = "GFINBURO.MX", fecha_inicio, fecha_fin)
-#obtener_datos(ticker = "GCARSOA1.MX", fecha_inicio, fecha_fin)
+obtener_datos(ticker = "GFINBURO.MX", fecha_inicio, fecha_fin)
+obtener_datos(ticker = "GCARSOA1.MX", fecha_inicio, fecha_fin)
 
-rendimientos_inbursa <- read.csv("C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/rendimientos_gfinburo.mx.csv")
+rendimientos_inbursa <- read.csv("C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/precios_rendimientos_gfinburo.mx.csv")
 
-rendimientos_carso <- read.csv("C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/rendimientos_gcarsoa1.mx.csv")
+rendimientos_carso <- read.csv("C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/precios_rendimientos_gcarsoa1.mx.csv")
 
 ```
+
+## 1.1 Función: ultimo_precio
+
+```{r funcion_ultimo_precio, warning=FALSE, message=FALSE}
+obten_ultimo_precio <- function(tickers, primera_fecha, ultima_fecha){
+  
+descarga_precios <- tickers |>
+  tidyquant::tq_get(get  = "stock.prices",
+                    from = primera_fecha,
+                    to = ultima_fecha)
+
+df_ultimo_precio <- descarga_precios |> 
+  dplyr::select(symbol, date, adjusted) |>
+  dplyr::mutate(date = as.character(date)) |>
+  dplyr::arrange(date) |>
+  tail(n=1)
+
+names(df_ultimo_precio) <- c("accion", "fecha", "precio")
+return(df_ultimo_precio)
+}
+```
+
+```{r}
+S0_inbursa <- obten_ultimo_precio("GFINBURO.MX", fecha_inicio, fecha_fin); S0_inbursa
+S0_carso <- obten_ultimo_precio("GCARSOA1.MX", fecha_inicio, fecha_fin); S0_carso
+```
+
+
+
+
+# 2. Función: descriptivos
+
+**Descripción:**  Lee vector de url's de git de los csv y calcula estadisticas descriptivas correspondientes
+
+**Parámetros:**
+
+- url 
+
+**Valor de retorno:**
+
+- `Dataframe` con columnas: symbol, media, mediana, varianza, desviación estándar, min, max y iqr
+
+```{r descriptivos}
+
+calculo_descriptivas <- function(df) {
+  
+  # Extraer la columna
+  x <- df$returns
+  
+  # Crear un data frame con estadísticas descriptivas
+  resumen <- data.frame(
+    Media = mean(x, na.rm = TRUE),
+    Mediana = median(x, na.rm = TRUE),
+    Varianza = var(x, na.rm = TRUE),
+    Desviacion_Estandar = sd(x, na.rm = TRUE),
+    Minimo = min(x, na.rm = TRUE),
+    Maximo = max(x, na.rm = TRUE),
+    Q1 = quantile(x, 0.25, na.rm = TRUE),
+    Q3 = quantile(x, 0.75, na.rm = TRUE),
+    Asimetria = skewness(x, na.rm = TRUE),
+    Curtosis = kurtosis(x, na.rm = TRUE)
+  )
+  
+  return(resumen)
+}
+
+
+```
+
+
+
+
+```{r}
+desc_carso <- calculo_descriptivas(rendimientos_carso); desc_carso
+
+desc_inbur <- calculo_descriptivas(rendimientos_inbursa);desc_inbur
+
+```
+
+# 3. Función: graficos       
+
+**Descripción:**  Utiliza el dataframe de rendimientos para generar archivos png con histrograma, densidad, historico y grafico de velas historico y el Q1 de 2025
+
+**Parámetros:**
+
+- Data Frame de los rendimientos 
+
+**Valor de retorno:**
+
+- `historico.png`
+- `histograma.png`
+- `velas_historico.png`
+- `velas_Q1_2025.png`
+
+
+
+```{r GRAFICOS, warning=FALSE, message=FALSE}
+graficos <- function(df) {
+  
+  stopifnot(all(c("date","returns","symbol","adjusted") %in% names(df)))
+
+  # Asegura tipos
+  if (inherits(df$date, "POSIXt")) df$date <- as.Date(df$date)
+  if (is.character(df$date)) df$date <- as.Date(df$date)  
+  df$returns[is.na(df$returns)] <- 0
+  ticker <- as.character(unique(df$symbol))[1]
+
+  outdir <- "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/outputs"
+  
+
+  # -------- Gráfico histórico (usa df, no rendimientos_carso) --------
+  g_precio <- ggplot(df, aes(x = date, y = adjusted)) +
+    geom_line(color = "darkblue") +
+    labs(title = paste0("Historico ticker: ", ticker),
+         x = "Fecha", y = "Precio (MXN)") +
+    scale_x_date(date_breaks = "6 months", date_labels = "%b-%Y") +
+    theme_classic()
+
+  ggsave(file.path(outdir, paste0(ticker, "_historico.png")),
+         plot = g_precio, width = 12, height = 4, dpi = 300)
+
+  # -------- Histograma y densidad --------
+  png(file.path(outdir, paste0(ticker, "_histograma.png")),
+      width = 1200, height = 800)
+  x <- na.omit(df$returns)
+  hist(x, breaks = 80, freq = FALSE, col = "#98F5FF",
+       main = paste0("Histograma y Densidad - ", ticker),
+       xlab = "Rendimientos", ylab = "Densidad")
+  lines(stats::density(x), col = "#8B0000", lty = 2, lwd = 2)
+  dev.off()
+
+  # -------- Gráficos de velas --------
+  # Asegura string simple
+  tick <- as.character(ticker)
+
+  g_vela_q1 <- quantmod::getSymbols(tick,
+                                    from = "2025-01-02",
+                                    to   = "2025-03-31",
+                                    periodicity = "daily",
+                                    auto.assign = FALSE)
+
+  png(file.path(outdir, paste0(tick, "_velas_Q1.png")),
+      width = 1200, height = 1200)
+  quantmod::chartSeries(g_vela_q1,
+                        name = paste0("Q1 - 2025 ", tick),
+                        theme = "white",
+                        up.col = "#66CD00",
+                        dn.col = "firebrick3")
+  dev.off()
+
+  g_vela_hist <- quantmod::getSymbols(tick,
+                                      from = "2018-01-02",
+                                      to   = "2024-12-31",
+                                      periodicity = "monthly",
+                                      auto.assign = FALSE)
+
+  png(file.path(outdir, paste0(tick, "_velas_historico.png")),
+      width = 1200, height = 1200)
+  quantmod::chartSeries(g_vela_hist,
+                        name = paste0("Historico ", tick),
+                        theme = "white",
+                        up.col = "#66CD00",
+                        dn.col = "firebrick3")
+  dev.off()
+
+  return("Gráficos generados y guardados en la carpeta de outputs.")
+}
+
+```
+
+
+```{r}
+graficos(rendimientos_carso)
+graficos(rendimientos_inbursa)
+
+```
+
+# 4. Función: estimacion_parametros
+
+## 4.1 Meixner
+
+**Descripción:**  Utiliza el dataframe de descriptivos para estimar parametros de la distribucion meixner
+
+**Parámetros:**
+- Data Frame de los descriptivos
+
+**Valor de retorno:**
+- Vector con los parámetros Meixner  estimados
+
+#### Nota: restringir parametros
+
+ - $a>0$
+ - $ - \pi < b < \pi  $
+ - $d> 0$
+ - $m \in \mathbb R$
+
+```{r funcion estimacion_meixner, warning=FALSE, message=FALSE}
+
+estim_params_meixner <- function(descriptivos_part){
+
+    # Extrae los descriptivos de la tabla de descriptivos  
+    media <- descriptivos_part$Media
+    desv_est <- descriptivos_part$Desviacion_Estandar
+    ske <- descriptivos_part$Asimetria
+    kurt <- descriptivos_part$Curtosis
+
+    # Calcula los estimadores para la distribución Meixner
+    d <- 1/(kurt - (ske^2) -3)
+    b <- sign(ske)*acos(2 - d*(kurt - 3))
+    a <- desv_est*sqrt((1+cos(b))/d)
+    m <- media - a*d*tan(b/2)
+    
+    params_meixner <- c(a, b, d, m)
+    return(params_meixner)
+    }
+```
+
+```{r}
+par_meixner_carso <- estim_params_meixner(desc_carso); par_meixner_carso
+par_meixner_inbursa <- estim_params_meixner(desc_inbur); par_meixner_inbursa
+```
+## 4.2 Gaussiana
+
+**Descripción:**  Utiliza el dataframe de descriptivos para estimar parametros de la distribucion normal
+
+**Parámetros:**
+
+- Data Frame de los descriptivos 
+
+**Valor de retorno:**
+
+- Vector con los parámetros normal estimados ($\hat{\mu}, \hat{\sigma}$)
+
+```{r estiamcion_normal_funcion, warning=FALSE, message=FALSE}
+
+estim_params_normal <- function(descriptivos_part){
+  media <- descriptivos_part$Media
+  desv_est <- descriptivos_part$Desviacion_Estandar
+  params_normal <- c(media, desv_est)
+return(params_normal)
+}
+```
+
+```{r parametros_normal, warning=FALSE, message=FALSE}
+
+par_normal_carso <- estim_params_normal(desc_carso); par_normal_carso
+par_normal_inbursa <-estim_params_normal(desc_inbur); par_normal_inbursa
+
+
+```
+
+
+
+
+# 5. Función: Ecuación númerica martingala
+
+**Descripción:**  Utiliza el vector de parametros estimados meixner para resolver la ecuación númerica martingala y devolver la theta de Esscher.
+
+**Parámetros:**
+
+- Vector de parametros estimados $\hat{a}, \hat{b}, \hat{d}, \hat{m}$ y la tasa libre de riesgo $r$.
+
+**Valor de retorno:**
+
+- Valor: $\theta$
+
+
+
+```{r}
+vect_params <- par_meixner_carso
+a <- vect_params[1]
+b <- vect_params[2]
+d <- vect_params[3]
+m <- vect_params[4]
+
+ecuacion_martingala_meixner <- function(x){
+  ecuacion_martingala<-log(cos((a*x + b)/2)) - log(cos((a*x + a + b)/2)) - (r-m)/(2*d)
+}
+
+#objeto_raiz <- uniroot(ecuacion_martingala_meixner, c(-15,15))
+
+#theta_essch <- objeto_raiz$root; theta_essch
+
+#Error en uniroot(ecuacion_martingala_meixner, c(5, 15)): 
+  #f() values at end points not of opposite sign
+
+
+```
+
+
+```{r calculo_theta, warning=FALSE, message=FALSE}
+calculo_theta_esscher <- function(vect_params, r) {
+  a <- vect_params[1]; b <- vect_params[2]
+  d <- vect_params[3]; m <- vect_params[4]
+
+  f <- function(x) {
+    t1 <- (a*x + b)/2
+    t2 <- (a*(x + 1) + b)/2
+    val <- log(cos(t1)) - log(cos(t2)) - (r - m)/(2*d)
+    return(val)
+  }
+
+  # 1) Intervalo de validez (intersección)
+  I1 <- sort(c((-pi - b)/a, ( pi - b)/a))
+  I2 <- sort(c((-pi - b - a)/a, ( pi - b - a)/a))
+  L <- max(I1[1], I2[1]); U <- min(I1[2], I2[2])
+  if (L >= U) stop("Sin intersección de dominio para theta.")
+
+  # 2) Buscar cambios de signo en un grid
+  grid <- seq(L, U, length.out = 2000)
+  y <- f(grid)
+  ok <- is.finite(y)
+  roots <- c()
+
+  # Detecta cambios de signo entre puntos finitos
+  idx <- which(ok[-length(ok)] & ok[-1] & (y[-length(y)] * y[-1] <= 0))
+  for (i in idx) {
+    a_i <- grid[i]; b_i <- grid[i+1]
+    # Evita extremos no finitos
+    if (is.finite(f(a_i)) && is.finite(f(b_i))) {
+      rr <- try(uniroot(f, c(a_i, b_i))$root, silent = TRUE)
+      if (!inherits(rr, "try-error")) roots <- c(roots, rr)
+    }
+  }
+
+  if (length(roots) == 0) stop("No se encontró raíz en el dominio válido.")
+  # 3) Elegir la más cercana a 0 (criterio usual)
+  roots[which.min(abs(roots))]
+}
+```
+
+```{r}
+r <- 0.085
+theta_inbursa <- calculo_theta_esscher(par_meixner_inbursa, r); theta_inbursa
+theta_carso <- calculo_theta_esscher(par_meixner_carso, r); theta_carso
+```
+# 6. Función: Parametros riesgo - neutro 
+
+## 6.1 Meixner
+
+**Parámetros:**
+
+- Vector de parametros estimados $\hat{a}, \hat{b}, \hat{d}, \hat{m}$ y la theta de Esscher $\theta$.
+
+**Valor de retorno:**
+- Un vector con los parámetros riesgo neutro de las distr. Meixner
+
+
+```{r parametros_riesgo_neutro_funcion}
+
+calculo_params_rn_meixner <- function(vect_params, theta){
+  # Parametros riesgo neutro
+  a <- vect_params[1]
+  b <- vect_params[2]
+  d <- vect_params[3]
+  m <- vect_params[4]
+  b_essch <- (a*theta) + b
+  params_rn <- c(a, b_essch, d, m)
+  names(params_rn) <- c("a", "b", "d", "m")
+  return(params_rn)
+}
+
+```
+
+```{r parametros_riesgo_neutro}
+par_rn_meixner_inbursa <- calculo_params_rn_meixner(par_meixner_inbursa, theta_inbursa); par_rn_meixner_inbursa
+par_rn_meixner_carso <- calculo_params_rn_meixner(par_meixner_carso, theta_carso); par_rn_meixner_carso
+
+```
+
+## 6.2 Gaussiana
+
+**Parámetros:**
+
+- Vector de parametros estimados normal $\hat{\mu}, \hat{\sigma}$ y la tasa libre de riesgo $r$.
+
+**Valor de retorno:**
+- Un vector con los parámetros riesgo neutro de las distr. Normal
+
+```{r funcion_parametros_riesgo_neutro_normal, warning=FALSE, message=FALSE}
+
+calculo_params_rn_normal <- function(vect_params, r){
+  mu <- vect_params[1]
+  sigma <- vect_params[2]
+  mu_rn <- r - (1/2)*(sigma^2)
+  sigma_rn <- sigma
+  params_rn <- c(mu_rn, sigma_rn)
+  names(params_rn) <- c("mu_normal", "sigma_normal")
+  return(params_rn)
+}
+
+```
+
+```{r}
+
+par_rn_normal_carso <- calculo_params_rn_normal(par_normal_carso, r); par_rn_normal_carso
+par_rn_nomal_inbursa <- calculo_params_rn_normal(par_normal_inbursa, r); par_normal_inbursa
+```
+
+
+# 7. Función: graficos_meixner
+
+```{r funcion_graficos_meixner, warning=FALSE, message=FALSE}
+
+
+
+```
+
+
+# 8. Función Exportar Datos Phyton
+
+**Parámetros:**
+
+- Un vector con params riesgo neutro de las distr. Meixner y Normal, la tasa libre de riesgo y el último precio del histórico
+
+**Valor de retorno:**
+- Un archivo para leer desde Python
+
+
+```{r funcion exportar archivos, warning=FALSE, message=FALSE}
+
+funcion_inputs_python <- function(df_S0, r, vector_params_rn, vector_params_rn_normal){
+  names(r) <- "tasa_libre"
+  df_vector_params_rn <- c(r, vector_params_rn,
+                           vector_params_rn_normal) |> t() |> as.data.frame()
+  objeto_a_python <- cbind(df_S0, df_vector_params_rn)
+  return(objeto_a_python)
+}
+```
+
+```{r objetos phyton}
+
+data_inbursa <- funcion_inputs_python(S0_inbursa, r, par_rn_meixner_inbursa, par_rn_nomal_inbursa)
+data_carso <- funcion_inputs_python(S0_carso, r, par_rn_meixner_carso, par_rn_normal_carso)
+
+write.csv(data_inbursa, "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/data_inbursa.csv")
+write.csv(data_carso, "C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/data_carso.csv")
+
+```
+
 

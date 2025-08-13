@@ -12,7 +12,7 @@
 <meta name="author" content="Erick Soto" />
 
 
-<title>Análisis Meixner</title>
+<title>Funciones Meinxer</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,13 +349,460 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Análisis Meixner</h1>
+<h1 class="title toc-ignore">Funciones Meinxer</h1>
 <h4 class="author">Erick Soto</h4>
 
 </div>
 
 
-<p>Hola es una prueba</p>
+<div id="función-obtener_datos" class="section level1">
+<h1>1. Función: obtener_datos</h1>
+<p><strong>Descripción:</strong> Descarga precios ajustados de un ticker
+desde Yahoo Finance, calcula sus rendimientos logarítmicos y exporta un
+CSV.</p>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li><p>ticker Símbolo financiero, p.ej. “AAPL” o “MSFT”</p></li>
+<li><p>fecha_inicio “YYYY-MM-DD”</p></li>
+<li><p>fecha_fin “YYYY-MM-DD”</p></li>
+</ul>
+<p><strong>Valor de retorno:</strong> Data frame con columnas: Fecha,
+Precio ajustado, Rendimiento logarítmico diario, produce además un
+archivo CSV llamado rendimientos <code>ticker.csv</code> y un txt con el
+valor del utlimo precio <code>S0.txt</code></p>
+<pre class="r"><code>obtener_datos &lt;- function(ticker, fecha_inicio, fecha_fin) {
+
+  #Descargamos precios
+  precios &lt;- tq_get(ticker, get = &quot;stock.prices&quot;, from = fecha_inicio, to = fecha_fin)
+  
+  # Calculamos log-rendimientos y los agregamos como columna
+  precios &lt;- precios %&gt;%
+    arrange(date) %&gt;%
+    mutate(
+      returns = c(NA, diff(log(adjusted)))  # Log-rendimientos diarios
+    )
+  
+  #Creamos CSV
+  ruta &lt;- &quot;C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data&quot;
+  nombre_csv &lt;- paste0(&quot;precios_rendimientos_&quot;, tolower(ticker),&quot;.csv&quot;)
+  write.csv(precios, file.path(ruta,nombre_csv))
+  
+  return(precios)
+}</code></pre>
+<pre class="r"><code>fecha_inicio&lt;- &quot;2018-01-02&quot;
+fecha_fin&lt;- &quot;2025-08-01&quot;
+
+obtener_datos(ticker = &quot;GFINBURO.MX&quot;, fecha_inicio, fecha_fin)</code></pre>
+<pre><code>## # A tibble: 1,907 × 9
+##    symbol      date        open  high   low close  volume adjusted   returns
+##    &lt;chr&gt;       &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 GFINBURO.MX 2018-01-02  32.5  34.0  32.1  33.8 1706338     32.1 NA       
+##  2 GFINBURO.MX 2018-01-03  33.8  34.7  33.1  34.1 2988567     32.3  0.00678 
+##  3 GFINBURO.MX 2018-01-04  34.0  34.9  34.0  34.7 3095284     32.9  0.0183  
+##  4 GFINBURO.MX 2018-01-05  34.8  35.0  34.5  34.9 1939586     33.1  0.00718 
+##  5 GFINBURO.MX 2018-01-08  35.0  35.2  33.9  34.4 1931432     32.6 -0.0150  
+##  6 GFINBURO.MX 2018-01-09  34.1  35.0  33.4  34.9 1582011     33.1  0.0127  
+##  7 GFINBURO.MX 2018-01-10  34.7  34.7  33.5  33.8 2266458     32.0 -0.0315  
+##  8 GFINBURO.MX 2018-01-11  34.0  34.2  33.0  33.6 2807032     31.9 -0.00475 
+##  9 GFINBURO.MX 2018-01-12  33.7  34.8  33.6  34.6 3547749     32.8  0.0284  
+## 10 GFINBURO.MX 2018-01-15  34.7  34.7  34.5  34.6  700014     32.8  0.000578
+## # ℹ 1,897 more rows</code></pre>
+<pre class="r"><code>obtener_datos(ticker = &quot;GCARSOA1.MX&quot;, fecha_inicio, fecha_fin)</code></pre>
+<pre><code>## # A tibble: 1,907 × 9
+##    symbol      date        open  high   low close volume adjusted  returns
+##    &lt;chr&gt;       &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 GCARSOA1.MX 2018-01-02  66    66    64.0  65.6 313388     60.1 NA      
+##  2 GCARSOA1.MX 2018-01-03  65.8  66.3  65    66.1 306672     60.7  0.00866
+##  3 GCARSOA1.MX 2018-01-04  66.3  67.2  65.6  65.8 358542     60.3 -0.00561
+##  4 GCARSOA1.MX 2018-01-05  66.4  67.5  66.1  67.4 222745     61.8  0.0251 
+##  5 GCARSOA1.MX 2018-01-08  67.4  68.5  66.3  68.3 462732     62.6  0.0128 
+##  6 GCARSOA1.MX 2018-01-09  68.3  68.3  66.5  67.2 299137     61.7 -0.0155 
+##  7 GCARSOA1.MX 2018-01-10  67.6  67.6  64.9  65.1 328977     59.7 -0.0325 
+##  8 GCARSOA1.MX 2018-01-11  66.3  67.0  64.3  66.6 342985     61.1  0.0235 
+##  9 GCARSOA1.MX 2018-01-12  65.3  68    65.2  66.1 563992     60.6 -0.00814
+## 10 GCARSOA1.MX 2018-01-15  66.1  66.3  65.3  65.4 134930     60.0 -0.0105 
+## # ℹ 1,897 more rows</code></pre>
+<pre class="r"><code>rendimientos_inbursa &lt;- read.csv(&quot;C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/precios_rendimientos_gfinburo.mx.csv&quot;)
+
+rendimientos_carso &lt;- read.csv(&quot;C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/data/precios_rendimientos_gcarsoa1.mx.csv&quot;)</code></pre>
+<div id="función-ultimo_precio" class="section level2">
+<h2>1.1 Función: ultimo_precio</h2>
+<pre class="r"><code>obten_ultimo_precio &lt;- function(tickers, primera_fecha, ultima_fecha){
+  
+descarga_precios &lt;- tickers |&gt;
+  tidyquant::tq_get(get  = &quot;stock.prices&quot;,
+                    from = primera_fecha,
+                    to = ultima_fecha)
+
+df_ultimo_precio &lt;- descarga_precios |&gt; 
+  dplyr::select(symbol, date, adjusted) |&gt;
+  dplyr::mutate(date = as.character(date)) |&gt;
+  dplyr::arrange(date) |&gt;
+  tail(n=1)
+
+names(df_ultimo_precio) &lt;- c(&quot;accion&quot;, &quot;fecha&quot;, &quot;precio&quot;)
+return(df_ultimo_precio)
+}</code></pre>
+<pre class="r"><code>S0_inbursa &lt;- obten_ultimo_precio(&quot;GFINBURO.MX&quot;, fecha_inicio, fecha_fin); S0_inbursa</code></pre>
+<pre><code>## # A tibble: 1 × 3
+##   accion      fecha      precio
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;
+## 1 GFINBURO.MX 2025-07-31   48.6</code></pre>
+<pre class="r"><code>S0_carso &lt;- obten_ultimo_precio(&quot;GCARSOA1.MX&quot;, fecha_inicio, fecha_fin); S0_carso</code></pre>
+<pre><code>## # A tibble: 1 × 3
+##   accion      fecha      precio
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;
+## 1 GCARSOA1.MX 2025-07-31   134.</code></pre>
+</div>
+</div>
+<div id="función-descriptivos" class="section level1">
+<h1>2. Función: descriptivos</h1>
+<p><strong>Descripción:</strong> Lee vector de url’s de git de los csv y
+calcula estadisticas descriptivas correspondientes</p>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li>url</li>
+</ul>
+<p><strong>Valor de retorno:</strong></p>
+<ul>
+<li><code>Dataframe</code> con columnas: symbol, media, mediana,
+varianza, desviación estándar, min, max y iqr</li>
+</ul>
+<pre class="r"><code>calculo_descriptivas &lt;- function(df) {
+  
+  # Extraer la columna
+  x &lt;- df$returns
+  
+  # Crear un data frame con estadísticas descriptivas
+  resumen &lt;- data.frame(
+    Media = mean(x, na.rm = TRUE),
+    Mediana = median(x, na.rm = TRUE),
+    Varianza = var(x, na.rm = TRUE),
+    Desviacion_Estandar = sd(x, na.rm = TRUE),
+    Minimo = min(x, na.rm = TRUE),
+    Maximo = max(x, na.rm = TRUE),
+    Q1 = quantile(x, 0.25, na.rm = TRUE),
+    Q3 = quantile(x, 0.75, na.rm = TRUE),
+    Asimetria = skewness(x, na.rm = TRUE),
+    Curtosis = kurtosis(x, na.rm = TRUE)
+  )
+  
+  return(resumen)
+}</code></pre>
+<pre class="r"><code>desc_carso &lt;- calculo_descriptivas(rendimientos_carso); desc_carso</code></pre>
+<pre><code>##            Media      Mediana     Varianza Desviacion_Estandar     Minimo
+## 25% 0.0004208261 0.0005494626 0.0005685108          0.02384347 -0.1612682
+##        Maximo          Q1         Q3    Asimetria Curtosis
+## 25% 0.1150126 -0.01375017 0.01384418 -0.001820393 5.370982</code></pre>
+<pre class="r"><code>desc_inbur &lt;- calculo_descriptivas(rendimientos_inbursa);desc_inbur</code></pre>
+<pre><code>##           Media Mediana     Varianza Desviacion_Estandar    Minimo     Maximo
+## 25% 0.000217708       0 0.0004619739          0.02149358 -0.168154 0.09413898
+##             Q1         Q3  Asimetria Curtosis
+## 25% -0.0118825 0.01140889 -0.2105355 6.648152</code></pre>
+</div>
+<div id="función-graficos" class="section level1">
+<h1>3. Función: graficos</h1>
+<p><strong>Descripción:</strong> Utiliza el dataframe de rendimientos
+para generar archivos png con histrograma, densidad, historico y grafico
+de velas historico y el Q1 de 2025</p>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li>Data Frame de los rendimientos</li>
+</ul>
+<p><strong>Valor de retorno:</strong></p>
+<ul>
+<li><code>historico.png</code></li>
+<li><code>histograma.png</code></li>
+<li><code>velas_historico.png</code></li>
+<li><code>velas_Q1_2025.png</code></li>
+</ul>
+<pre class="r"><code>graficos &lt;- function(df) {
+  
+  stopifnot(all(c(&quot;date&quot;,&quot;returns&quot;,&quot;symbol&quot;,&quot;adjusted&quot;) %in% names(df)))
+
+  # Asegura tipos
+  if (inherits(df$date, &quot;POSIXt&quot;)) df$date &lt;- as.Date(df$date)
+  if (is.character(df$date)) df$date &lt;- as.Date(df$date)  
+  df$returns[is.na(df$returns)] &lt;- 0
+  ticker &lt;- as.character(unique(df$symbol))[1]
+
+  outdir &lt;- &quot;C:/Users/erick/OneDrive/Documentos/Tesis/meixner/meixner_functions/outputs&quot;
+  
+
+  # -------- Gráfico histórico (usa df, no rendimientos_carso) --------
+  g_precio &lt;- ggplot(df, aes(x = date, y = adjusted)) +
+    geom_line(color = &quot;darkblue&quot;) +
+    labs(title = paste0(&quot;Historico ticker: &quot;, ticker),
+         x = &quot;Fecha&quot;, y = &quot;Precio (MXN)&quot;) +
+    scale_x_date(date_breaks = &quot;6 months&quot;, date_labels = &quot;%b-%Y&quot;) +
+    theme_classic()
+
+  ggsave(file.path(outdir, paste0(ticker, &quot;_historico.png&quot;)),
+         plot = g_precio, width = 12, height = 4, dpi = 300)
+
+  # -------- Histograma y densidad --------
+  png(file.path(outdir, paste0(ticker, &quot;_histograma.png&quot;)),
+      width = 1200, height = 800)
+  x &lt;- na.omit(df$returns)
+  hist(x, breaks = 80, freq = FALSE, col = &quot;#98F5FF&quot;,
+       main = paste0(&quot;Histograma y Densidad - &quot;, ticker),
+       xlab = &quot;Rendimientos&quot;, ylab = &quot;Densidad&quot;)
+  lines(stats::density(x), col = &quot;#8B0000&quot;, lty = 2, lwd = 2)
+  dev.off()
+
+  # -------- Gráficos de velas --------
+  # Asegura string simple
+  tick &lt;- as.character(ticker)
+
+  g_vela_q1 &lt;- quantmod::getSymbols(tick,
+                                    from = &quot;2025-01-02&quot;,
+                                    to   = &quot;2025-03-31&quot;,
+                                    periodicity = &quot;daily&quot;,
+                                    auto.assign = FALSE)
+
+  png(file.path(outdir, paste0(tick, &quot;_velas_Q1.png&quot;)),
+      width = 1200, height = 1200)
+  quantmod::chartSeries(g_vela_q1,
+                        name = paste0(&quot;Q1 - 2025 &quot;, tick),
+                        theme = &quot;white&quot;,
+                        up.col = &quot;#66CD00&quot;,
+                        dn.col = &quot;firebrick3&quot;)
+  dev.off()
+
+  g_vela_hist &lt;- quantmod::getSymbols(tick,
+                                      from = &quot;2018-01-02&quot;,
+                                      to   = &quot;2024-12-31&quot;,
+                                      periodicity = &quot;monthly&quot;,
+                                      auto.assign = FALSE)
+
+  png(file.path(outdir, paste0(tick, &quot;_velas_historico.png&quot;)),
+      width = 1200, height = 1200)
+  quantmod::chartSeries(g_vela_hist,
+                        name = paste0(&quot;Historico &quot;, tick),
+                        theme = &quot;white&quot;,
+                        up.col = &quot;#66CD00&quot;,
+                        dn.col = &quot;firebrick3&quot;)
+  dev.off()
+
+  return(&quot;Gráficos generados y guardados en la carpeta de outputs.&quot;)
+}</code></pre>
+<pre class="r"><code>graficos(rendimientos_carso)</code></pre>
+<pre><code>## [1] &quot;Gráficos generados y guardados en la carpeta de outputs.&quot;</code></pre>
+<pre class="r"><code>graficos(rendimientos_inbursa)</code></pre>
+<pre><code>## [1] &quot;Gráficos generados y guardados en la carpeta de outputs.&quot;</code></pre>
+</div>
+<div id="función-estimacion_parametros" class="section level1">
+<h1>4. Función: estimacion_parametros</h1>
+<div id="meixner" class="section level2">
+<h2>4.1 Meixner</h2>
+<p><strong>Descripción:</strong> Utiliza el dataframe de descriptivos
+para estimar parametros de la distribucion meixner</p>
+<p><strong>Parámetros:</strong> - Data Frame de los descriptivos</p>
+<p><strong>Valor de retorno:</strong> - Vector con los parámetros
+Meixner estimados</p>
+<div id="nota-restringir-parametros" class="section level4">
+<h4>Nota: restringir parametros</h4>
+<ul>
+<li><span class="math inline">\(a&gt;0\)</span></li>
+<li>$ - &lt; b &lt; $</li>
+<li><span class="math inline">\(d&gt; 0\)</span></li>
+<li><span class="math inline">\(m \in \mathbb R\)</span></li>
+</ul>
+<pre class="r"><code>estim_params_meixner &lt;- function(descriptivos_part){
+
+    # Extrae los descriptivos de la tabla de descriptivos  
+    media &lt;- descriptivos_part$Media
+    desv_est &lt;- descriptivos_part$Desviacion_Estandar
+    ske &lt;- descriptivos_part$Asimetria
+    kurt &lt;- descriptivos_part$Curtosis
+
+    # Calcula los estimadores para la distribución Meixner
+    d &lt;- 1/(kurt - (ske^2) -3)
+    b &lt;- sign(ske)*acos(2 - d*(kurt - 3))
+    a &lt;- desv_est*sqrt((1+cos(b))/d)
+    m &lt;- media - a*d*tan(b/2)
+    
+    params_meixner &lt;- c(a, b, d, m)
+    return(params_meixner)
+    }</code></pre>
+<pre class="r"><code>par_meixner_carso &lt;- estim_params_meixner(desc_carso); par_meixner_carso</code></pre>
+<pre><code>## [1]  0.0519216019 -0.0016719236  0.4217666839  0.0004391326</code></pre>
+<pre class="r"><code>par_meixner_inbursa &lt;- estim_params_meixner(desc_inbur); par_meixner_inbursa</code></pre>
+<pre><code>## [1]  0.057526255 -0.157001747  0.277482847  0.001473362</code></pre>
+</div>
+</div>
+<div id="gaussiana" class="section level2">
+<h2>4.2 Gaussiana</h2>
+<p><strong>Descripción:</strong> Utiliza el dataframe de descriptivos
+para estimar parametros de la distribucion normal</p>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li>Data Frame de los descriptivos</li>
+</ul>
+<p><strong>Valor de retorno:</strong></p>
+<ul>
+<li>Vector con los parámetros normal estimados (<span class="math inline">\(\hat{\mu}, \hat{\sigma}\)</span>)</li>
+</ul>
+<pre class="r"><code>estim_params_normal &lt;- function(descriptivos_part){
+  media &lt;- descriptivos_part$Media
+  desv_est &lt;- descriptivos_part$Desviacion_Estandar
+  params_normal &lt;- c(media, desv_est)
+return(params_normal)
+}</code></pre>
+<pre class="r"><code>par_normal_carso &lt;- estim_params_normal(desc_carso); par_normal_carso</code></pre>
+<pre><code>## [1] 0.0004208261 0.0238434652</code></pre>
+<pre class="r"><code>par_normal_inbursa &lt;-estim_params_normal(desc_inbur); par_normal_inbursa</code></pre>
+<pre><code>## [1] 0.000217708 0.021493577</code></pre>
+</div>
+</div>
+<div id="función-ecuación-númerica-martingala" class="section level1">
+<h1>5. Función: Ecuación númerica martingala</h1>
+<p><strong>Descripción:</strong> Utiliza el vector de parametros
+estimados meixner para resolver la ecuación númerica martingala y
+devolver la theta de Esscher.</p>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li>Vector de parametros estimados <span class="math inline">\(\hat{a},
+\hat{b}, \hat{d}, \hat{m}\)</span> y la tasa libre de riesgo <span class="math inline">\(r\)</span>.</li>
+</ul>
+<p><strong>Valor de retorno:</strong></p>
+<ul>
+<li>Valor: <span class="math inline">\(\theta\)</span></li>
+</ul>
+<pre class="r"><code>vect_params &lt;- par_meixner_carso
+a &lt;- vect_params[1]
+b &lt;- vect_params[2]
+d &lt;- vect_params[3]
+m &lt;- vect_params[4]
+
+ecuacion_martingala_meixner &lt;- function(x){
+  ecuacion_martingala&lt;-log(cos((a*x + b)/2)) - log(cos((a*x + a + b)/2)) - (r-m)/(2*d)
+}
+
+#objeto_raiz &lt;- uniroot(ecuacion_martingala_meixner, c(-15,15))
+
+#theta_essch &lt;- objeto_raiz$root; theta_essch
+
+#Error en uniroot(ecuacion_martingala_meixner, c(5, 15)): 
+  #f() values at end points not of opposite sign</code></pre>
+<pre class="r"><code>calculo_theta_esscher &lt;- function(vect_params, r) {
+  a &lt;- vect_params[1]; b &lt;- vect_params[2]
+  d &lt;- vect_params[3]; m &lt;- vect_params[4]
+
+  f &lt;- function(x) {
+    t1 &lt;- (a*x + b)/2
+    t2 &lt;- (a*(x + 1) + b)/2
+    val &lt;- log(cos(t1)) - log(cos(t2)) - (r - m)/(2*d)
+    return(val)
+  }
+
+  # 1) Intervalo de validez (intersección)
+  I1 &lt;- sort(c((-pi - b)/a, ( pi - b)/a))
+  I2 &lt;- sort(c((-pi - b - a)/a, ( pi - b - a)/a))
+  L &lt;- max(I1[1], I2[1]); U &lt;- min(I1[2], I2[2])
+  if (L &gt;= U) stop(&quot;Sin intersección de dominio para theta.&quot;)
+
+  # 2) Buscar cambios de signo en un grid
+  grid &lt;- seq(L, U, length.out = 2000)
+  y &lt;- f(grid)
+  ok &lt;- is.finite(y)
+  roots &lt;- c()
+
+  # Detecta cambios de signo entre puntos finitos
+  idx &lt;- which(ok[-length(ok)] &amp; ok[-1] &amp; (y[-length(y)] * y[-1] &lt;= 0))
+  for (i in idx) {
+    a_i &lt;- grid[i]; b_i &lt;- grid[i+1]
+    # Evita extremos no finitos
+    if (is.finite(f(a_i)) &amp;&amp; is.finite(f(b_i))) {
+      rr &lt;- try(uniroot(f, c(a_i, b_i))$root, silent = TRUE)
+      if (!inherits(rr, &quot;try-error&quot;)) roots &lt;- c(roots, rr)
+    }
+  }
+
+  if (length(roots) == 0) stop(&quot;No se encontró raíz en el dominio válido.&quot;)
+  # 3) Elegir la más cercana a 0 (criterio usual)
+  roots[which.min(abs(roots))]
+}</code></pre>
+<pre class="r"><code>r &lt;- 0.085
+theta_inbursa &lt;- calculo_theta_esscher(par_meixner_inbursa, r); theta_inbursa</code></pre>
+<pre><code>## [1] 50.26312</code></pre>
+<pre class="r"><code>theta_carso &lt;- calculo_theta_esscher(par_meixner_carso, r); theta_carso</code></pre>
+<pre><code>## [1] 50.2693</code></pre>
+</div>
+<div id="función-parametros-riesgo---neutro" class="section level1">
+<h1>6. Función: Parametros riesgo - neutro</h1>
+<div id="meixner-1" class="section level2">
+<h2>6.1 Meixner</h2>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li>Vector de parametros estimados <span class="math inline">\(\hat{a},
+\hat{b}, \hat{d}, \hat{m}\)</span> y la theta de Esscher <span class="math inline">\(\theta\)</span>.</li>
+</ul>
+<p><strong>Valor de retorno:</strong> - Un vector con los parámetros
+riesgo neutro de las distr. Meixner</p>
+<pre class="r"><code>calculo_params_rn_meixner &lt;- function(vect_params, theta){
+  # Parametros riesgo neutro
+  a &lt;- vect_params[1]
+  b &lt;- vect_params[2]
+  d &lt;- vect_params[3]
+  m &lt;- vect_params[4]
+  b_essch &lt;- (a*theta) + b
+  params_rn &lt;- c(a, b_essch, d, m)
+  names(params_rn) &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;m&quot;)
+  return(params_rn)
+}</code></pre>
+<pre class="r"><code>par_rn_meixner_inbursa &lt;- calculo_params_rn_meixner(par_meixner_inbursa, theta_inbursa); par_rn_meixner_inbursa</code></pre>
+<pre><code>##           a           b           d           m 
+## 0.057526255 2.734447395 0.277482847 0.001473362</code></pre>
+<pre class="r"><code>par_rn_meixner_carso &lt;- calculo_params_rn_meixner(par_meixner_carso, theta_carso); par_rn_meixner_carso</code></pre>
+<pre><code>##            a            b            d            m 
+## 0.0519216019 2.6083904519 0.4217666839 0.0004391326</code></pre>
+</div>
+<div id="gaussiana-1" class="section level2">
+<h2>6.2 Gaussiana</h2>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li>Vector de parametros estimados normal <span class="math inline">\(\hat{\mu}, \hat{\sigma}\)</span> y la tasa libre
+de riesgo <span class="math inline">\(r\)</span>.</li>
+</ul>
+<p><strong>Valor de retorno:</strong> - Un vector con los parámetros
+riesgo neutro de las distr. Normal</p>
+<pre class="r"><code>calculo_params_rn_normal &lt;- function(vect_params, r){
+  mu &lt;- vect_params[1]
+  sigma &lt;- vect_params[2]
+  mu_rn &lt;- r - (1/2)*(sigma^2)
+  sigma_rn &lt;- sigma
+  params_rn &lt;- c(mu_rn, sigma_rn)
+  names(params_rn) &lt;- c(&quot;mu_normal&quot;, &quot;sigma_normal&quot;)
+  return(params_rn)
+}</code></pre>
+<pre class="r"><code>par_rn_normal_carso &lt;- calculo_params_rn_normal(par_normal_carso, r); par_rn_normal_carso</code></pre>
+<pre><code>##    mu_normal sigma_normal 
+##   0.08471574   0.02384347</code></pre>
+<pre class="r"><code>par_rn_nomal_inbursa &lt;- calculo_params_rn_normal(par_normal_inbursa, r); par_normal_inbursa</code></pre>
+<pre><code>## [1] 0.000217708 0.021493577</code></pre>
+</div>
+</div>
+<div id="función-graficos_meixner" class="section level1">
+<h1>7. Función: graficos_meixner</h1>
+</div>
+<div id="función-exportar-datos-phyton" class="section level1">
+<h1>8. Función Exportar Datos Phyton</h1>
+<p><strong>Parámetros:</strong></p>
+<ul>
+<li>Un vector con params riesgo neutro de las distr. Meixner y Normal,
+la tasa libre de riesgo y el último precio del histórico</li>
+</ul>
+<p><strong>Valor de retorno:</strong> - Un archivo para leer desde
+Python</p>
+<pre class="r"><code>funcion_inputs_python &lt;- function(df_S0, r, vector_params_rn, vector_params_rn_normal){
+  names(r) &lt;- &quot;tasa_libre&quot;
+  df_vector_params_rn &lt;- c(r, vector_params_rn,
+                           vector_params_rn_normal) |&gt; t() |&gt; as.data.frame()
+  objeto_a_python &lt;- cbind(df_S0, df_vector_params_rn)
+  return(objeto_a_python)
+}</code></pre>
+</div>
 
 
 
